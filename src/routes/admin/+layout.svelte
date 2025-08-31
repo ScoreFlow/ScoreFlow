@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SidebarInset, SidebarProvider } from '$lib/components/ui/sidebar';
-	import { AdminSidebar, Trigger } from '$lib/components/admin-sidebar';
+	import { AdminSidebar, Trigger } from '$lib/components/sidebar';
 	import { Copyright } from '$lib/components/copyright';
 
 	let { children } = $props();

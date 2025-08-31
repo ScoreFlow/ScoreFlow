@@ -10,9 +10,9 @@ export interface MenuItem {
 }
 
 export const navData: {
-	navManagement: MenuItem[];
+	navAdmin: MenuItem[];
 } = {
-	navManagement: [
+	navAdmin: [
 		{
 			title: 'Dashboard',
 			url: '/admin',

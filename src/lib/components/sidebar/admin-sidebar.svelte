@@ -3,14 +3,13 @@
 <script lang="ts">
 	import {
 		Sidebar,
-		SidebarContent,
 		SidebarHeader,
 		SidebarMenu,
 		SidebarMenuButton,
 		SidebarMenuItem
 	} from '$lib/components/ui/sidebar';
-	import NavManagement from './nav-management.svelte';
-	import { navData as data } from '$lib/components/admin-sidebar/index';
+	import Content from './content.svelte';
+	import { navData } from './index';
 </script>
 
 
@@ -30,7 +29,5 @@
 			</SidebarMenuItem>
 		</SidebarMenu>
 	</SidebarHeader>
-	<SidebarContent>
-		<NavManagement items={data.navManagement} />
-	</SidebarContent>
+		<Content title="Beheer" items={navData.navAdmin} />
 </Sidebar>
