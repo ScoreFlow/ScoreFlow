@@ -6,10 +6,18 @@
 		SidebarHeader,
 		SidebarMenu,
 		SidebarMenuButton,
-		SidebarMenuItem
+		SidebarMenuItem,
+		useSidebar
 	} from '$lib/components/ui/sidebar';
 	import Content from './content.svelte';
 	import { navData } from './index';
+	import { beforeNavigate } from '$app/navigation';
+
+	const sidebar = useSidebar();
+
+	beforeNavigate(() => {
+		sidebar.setOpenMobile(false);
+	});
 </script>
 
 
@@ -29,5 +37,5 @@
 			</SidebarMenuItem>
 		</SidebarMenu>
 	</SidebarHeader>
-		<Content title="Beheer" items={navData.navAdmin} />
+	<Content items={navData.navAdmin} title="Beheer" />
 </Sidebar>
