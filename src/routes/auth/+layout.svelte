@@ -2,6 +2,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { cn } from '$lib/utils/ui';
 	import { page } from '$app/state';
+	import { Copyright } from '$lib/components/copyright';
 
 	let { children } = $props();
 </script>
@@ -14,12 +15,7 @@
 			<Card class="overflow-hidden p-0">
 				{@render children()}
 			</Card>
-			<div
-				class="text-muted-foreground *:[a]:hover:text-primary *:[a]:underline *:[a]:underline-offset-4 text-balance text-center text-xs"
-			>
-				Copyright © 2025 Yorick Nap en Niels Krijnen<br />
-				Alle rechten voorbehouden
-			</div>
+			<Copyright/>
 		</div>
 	</div>
 </div>
