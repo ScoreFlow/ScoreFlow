@@ -1,9 +1,9 @@
 import type { User, SupabaseClient } from '@supabase/supabase-js';
 import { redirect } from '@sveltejs/kit';
 
-export async function requireAdmin(supabase: SupabaseClient, user: User | null) {
+export async function isAdmin(supabase: SupabaseClient, user: User | null): Promise<boolean> {
 	if (!user) {
-		redirect(303, '/');
+		return false;
 	}
 
 	const { count, error } = await supabase
@@ -15,7 +15,11 @@ export async function requireAdmin(supabase: SupabaseClient, user: User | null) 
 		throw error;
 	}
 
-	if (count === null || count === 0) {
-		redirect(303, '/');
+	return count !== null && count > 0;
+}
+
+export async function requireAdmin(supabase: SupabaseClient, user: User | null) {
+	if (!await isAdmin(supabase, user)) {
+		throw redirect(303, '/');
 	}
 }
