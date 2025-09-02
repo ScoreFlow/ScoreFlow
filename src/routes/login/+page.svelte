@@ -17,7 +17,6 @@
 
 	let loading: boolean = $state(false);
 	let loadingOauth: Partial<{ [key in Provider]: boolean }> = $state({});
-
 </script>
 
 {#snippet oauthForm(provider: Provider)}
@@ -123,8 +122,8 @@
 					<div class="bg-muted items-center justify-center hidden md:flex">
 						<img
 							alt=""
-							class="inset-0 object-cover"
-							src="/images/logo.png"
+							class="inset-0 object-cover w-full m-24"
+							src="/favicon.svg"
 						/>
 					</div>
 				</CardContent>
