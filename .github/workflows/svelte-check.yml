@@ -1,26 +1,28 @@
 name: Svelte Check
 
-on:
-    - pull_request
+on: [pull_request]
     
 permissions:
   pull-requests: write
 
 jobs:
-    svelte-check:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  svelte-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup Node 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  registry-url: https://registry.npmjs.org/
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+            registry-url: https://registry.npmjs.org/
 
-            - name: Install
-              run: npm install
+      - name: Install
+        run: npm install
 
-            - name: Svelte Check
-              uses: ghostdevv/svelte-check-action@v1
+      - name: Svelte Check
+        uses: ghostdevv/svelte-check-action@v1
+        with:
+          failOnError: 'true'
+          failOnWarning: 'true'
