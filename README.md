@@ -1,4 +1,4 @@
-<img width="275" height="240" alt="logo" src="https://github.com/user-attachments/assets/ddc88c53-a1e0-48d3-99cc-46b55755c585" />
+<img width="108" height="113" alt="favicon" src="https://github.com/user-attachments/assets/584e48c3-6e8d-4c68-a57b-11b0ee80b7ec" />
 
 # ScoreFlow
 
