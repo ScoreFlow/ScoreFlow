@@ -119,7 +119,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="bg-muted items-center justify-center hidden md:flex">
+					<div class="bg-secondary items-center justify-center hidden md:flex">
 						<img
 							alt=""
 							class="inset-0 object-cover w-full m-24"
