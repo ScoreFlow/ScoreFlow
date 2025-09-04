@@ -6,6 +6,6 @@
 
 <p>Ingelogd als {data.session?.user.email}</p>
 
-<form action="/logout" method="GET">
+<form action="/auth/logout" method="GET">
   <Button type="submit">Uitloggen</Button>
 </form>

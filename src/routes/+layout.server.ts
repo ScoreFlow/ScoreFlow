@@ -5,9 +5,9 @@ export const load: LayoutServerLoad = async ({ cookies, locals: { safeGetSession
 	const { session, user } = await safeGetSession();
 
 	if (user) {
-		if (url.pathname === '/login') redirect(303, '/');
+		if (url.pathname === '/auth/login') redirect(303, '/');
 	} else {
-		if (url.pathname !== '/login') redirect(303, '/login');
+		if (!url.pathname.startsWith('/auth')) redirect(303, '/auth/login');
 	}
 
 	return {
