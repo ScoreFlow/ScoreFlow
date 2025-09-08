@@ -17,7 +17,6 @@
 
 	let loading: boolean = $state(false);
 	let loadingOauth: Partial<{ [key in Provider]: boolean }> = $state({});
-
 </script>
 
 {#snippet oauthForm(provider: Provider)}
@@ -48,7 +47,7 @@
 		<div class="flex flex-col gap-6">
 
 			<div class="flex flex-col items-center text-center">
-				<h1 class="text-2xl font-bold">Orkestro</h1>
+				<h1 class="text-2xl font-bold">ScoreFlow</h1>
 				<div class="text-muted-foreground text-balance">Log in om door te gaan</div>
 			</div>
 
@@ -111,11 +110,11 @@
 			</form>
 		</div>
 	</div>
-	<div class="bg-muted relative hidden md:block">
+	<div class="bg-muted items-center justify-center hidden md:flex">
 		<img
 			alt=""
-			class="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-			src="/images/login-background.svg"
+			class="inset-0 object-cover w-full m-24"
+			src="/favicon.svg"
 		/>
 	</div>
 </CardContent>
