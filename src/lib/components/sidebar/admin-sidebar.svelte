@@ -28,8 +28,8 @@
 				<a href="/admin/dashboard">
 					<SidebarMenuButton size="lg">
 						<div
-							class="flex items-center justify-center aspect-square size-6 group-data-[collapsible=icon]:p-1.5 transition-[padding]">
-							<img alt="Logo" src="/favicon.png" />
+							class="flex items-center justify-center aspect-square size-8">
+							<img alt="Logo" src="/favicon.svg" class="size-6" />
 						</div>
 						<span class="text-primary font-medium text-xl ml-2">ScoreFlow</span>
 					</SidebarMenuButton>
