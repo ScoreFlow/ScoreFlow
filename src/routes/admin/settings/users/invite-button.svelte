@@ -1,0 +1,81 @@
+<script lang="ts">
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { inviteUser } from '$lib/remote/admin/users.remote';
+	import { Input } from '$lib/components/ui/input';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle,
+		DialogTrigger
+	} from '$lib/components/ui/dialog';
+	import { AlertCircleIcon, CircleCheckIcon, PlusIcon } from '@lucide/svelte';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Label } from '$lib/components/ui/label';
+	import { Spinner } from '$lib/components/spinner';
+	import { invalidateAll } from '$app/navigation';
+
+	let inviteLoading = $state(false);
+	let form: HTMLFormElement | undefined = $state();
+	const id = $props.id();
+</script>
+
+
+<Dialog>
+	<DialogTrigger class={buttonVariants({variant: 'outline', size: 'sm'})}>
+		<PlusIcon />
+		<span class="hidden lg:inline">Gebruiker toevoegen</span>
+	</DialogTrigger>
+	<DialogContent>
+		<form {...inviteUser.enhance(async ({ submit }: {submit: () => Promise<void>}) => {
+			inviteLoading = true;
+			await submit();
+			if (inviteUser.result?.success) {
+				form?.reset();
+				await invalidateAll();
+			}
+			inviteLoading = false;
+		})} bind:this={form}>
+			<DialogHeader>
+				<DialogTitle>
+					Gebruiker toevoegen
+				</DialogTitle>
+				<DialogDescription>
+					Vul naam en e-mailadres in om een gebruiker toe te voegen.
+				</DialogDescription>
+			</DialogHeader>
+			<div class="grid grid-cols-[auto_1fr] gap-4 py-4">
+				<Label class="text-right" for="name-{id}">Naam</Label>
+				<Input class="grow" id="name-{id}" name="name" required type="text" />
+
+				<Label class="text-right" for="email-{id}">E-mailadres</Label>
+				<Input class="grow" id="email-{id}" name="email" required type="email" />
+
+				{#if (inviteUser.result?.error)}
+					<Alert variant="destructive" class="col-span-2">
+						<AlertCircleIcon />
+						<AlertDescription>{inviteUser.result.error}</AlertDescription>
+					</Alert>
+				{/if}
+
+				{#if (inviteUser.result?.success)}
+					<Alert class="col-span-2">
+						<CircleCheckIcon />
+						<AlertDescription>Er is een e-mail met een uitnodiging verstuurd</AlertDescription>
+					</Alert>
+				{/if}
+			</div>
+			<DialogFooter>
+				<Button type="submit">
+					{#if inviteLoading}
+						<Spinner size="sm" />
+					{:else}
+						Toevoegen
+					{/if}
+				</Button>
+			</DialogFooter>
+		</form>
+	</DialogContent>
+</Dialog>
