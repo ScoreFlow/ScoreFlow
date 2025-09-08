@@ -1,4 +1,6 @@
-# Orkestro
+<img width="108" height="113" alt="favicon" src="https://github.com/user-attachments/assets/584e48c3-6e8d-4c68-a57b-11b0ee80b7ec" />
+
+# ScoreFlow
 
 A music score manager and distributor for orchestras.
 
