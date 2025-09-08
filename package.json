@@ -19,7 +19,7 @@
 		"@internationalized/date": "^3.9.0",
 		"@lucide/svelte": "^0.542.0",
 		"@sveltejs/adapter-vercel": "^5.10.2",
-		"@sveltejs/kit": "^2.36.3",
+		"@sveltejs/kit": "^2.37.1",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^22",
