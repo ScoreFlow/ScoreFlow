@@ -21,6 +21,9 @@ jobs:
       - name: Install
         run: npm install
 
+      - name: Copy .env
+        run: cp .env.example .env
+
       - name: Svelte Check
         uses: ghostdevv/svelte-check-action@v1
         with:
