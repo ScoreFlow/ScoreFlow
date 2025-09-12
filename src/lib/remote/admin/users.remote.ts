@@ -23,8 +23,6 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 		throw error;
 	}
 
-	await new Promise(resolve => setTimeout(resolve, 1000));
-
 	return await Promise.all(
 		rawUsers.map(async (user) => {
 			const roles = await getRoles(supabaseAdmin, user);
