@@ -4,9 +4,6 @@
 	import { Copyright } from '$lib/components/copyright/index.js';
 
 	let { data } = $props();
-	console.log(data);
-
-	console.log(data.roles);
 </script>
 
 <div class="bg-muted min-h-svh flex flex-col items-center justify-center gap-6 p-6 md:p-10 relative">
