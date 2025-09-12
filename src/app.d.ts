@@ -12,6 +12,8 @@ declare global {
 
 		interface PageData {
 			session: Session | null;
+			supabase: SupabaseClient<Database>;
+			roles?: string[];
 		}
 	}
 }
