@@ -14,21 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      admins: {
-        Row: {
-          id: number
-          user_id: string
-        }
-        Insert: {
-          id?: number
-          user_id?: string
-        }
-        Update: {
-          id?: number
-          user_id?: string
-        }
-        Relationships: []
-      }
       concert_orchestras: {
         Row: {
           concert_id: number
@@ -313,6 +298,24 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: number
+          role: Database["public"]["Enums"]["Role"]
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          role: Database["public"]["Enums"]["Role"]
+          user_id: string
+        }
+        Update: {
+          id?: number
+          role?: Database["public"]["Enums"]["Role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_settings: {
         Row: {
           id: number
@@ -348,7 +351,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      Role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -475,6 +478,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      Role: ["admin"],
+    },
   },
 } as const

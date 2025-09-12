@@ -1,19 +1,17 @@
-import { isAdmin } from '$lib/server/utils/auth';
+import { getRoles, requireRole } from '$lib/server/utils/auth';
 import { form, getRequestEvent, query } from '$app/server';
 import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
 import type { User } from '@supabase/supabase-js';
 
 export interface UserData extends User {
-	admin: boolean;
+	roles: string[];
 }
 
 export const getUsers = query(async (): Promise<UserData[]> => {
 	const { locals } = getRequestEvent();
 	const { user } = await locals.safeGetSession();
 
-	if (!(await isAdmin(locals.supabase, user))) {
-		throw new Error('Unauthorized');
-	}
+	await requireRole(locals.supabase, user, 'admin');
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 	const {
@@ -29,10 +27,10 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
 	return await Promise.all(
 		rawUsers.map(async (user) => {
-			const admin = await isAdmin(supabaseAdmin, user);
+			const roles = await getRoles(supabaseAdmin, user);
 			return {
 				...user,
-				admin
+				roles
 			} as UserData;
 		})
 	);
@@ -52,9 +50,7 @@ export const inviteUser = form(async (data) => {
 	} = getRequestEvent();
 	const { user } = await locals.safeGetSession();
 
-	if (!(await isAdmin(locals.supabase, user))) {
-		throw new Error('Unauthorized');
-	}
+	await requireRole(locals.supabase, user, 'admin');
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 

@@ -16,9 +16,9 @@
 			header: 'Naam'
 		},
 		{
-			accessorKey: 'admin',
+			accessorKey: 'roles',
 			header: 'Rol',
-			cell: ({ row }) => renderSnippet(Admin, { row: row.original })
+			cell: ({ row }) => renderSnippet(Roles, { row: row.original })
 		}
 	];
 
@@ -79,8 +79,8 @@
 	</div>
 </div>
 
-{#snippet Admin({ row }: {row: UserData})}
-	{#if row.admin}
+{#snippet Roles({ row }: {row: UserData})}
+	{#if row.roles.includes('admin')}
 		<Badge variant="secondary">
 			Beheerder
 		</Badge>
