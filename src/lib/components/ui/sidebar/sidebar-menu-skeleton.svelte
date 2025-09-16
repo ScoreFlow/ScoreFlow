@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils/ui.js";
+	import { cn, type WithElementRef } from "$lib/utils/ui";
 	import { Skeleton } from "$lib/components/ui/skeleton/index.js";
 	import type { HTMLAttributes } from "svelte/elements";
 

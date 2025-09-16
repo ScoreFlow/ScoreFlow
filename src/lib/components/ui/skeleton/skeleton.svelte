@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils/ui.js";
+	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils/ui";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
