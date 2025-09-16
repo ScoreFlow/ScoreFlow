@@ -3,7 +3,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Spinner } from '$lib/components/ui/spinner/index.js';
+	import { Spinner } from '$lib/components/spinner';
 
 	let { data, children } = $props();
 	let { session, supabase } = $derived(data);
