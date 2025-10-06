@@ -9,19 +9,11 @@
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 
 	import { changePassword } from '$lib/remote/auth.remote';
-	import { goto } from '$app/navigation';
 
 	let { data } = $props();
 
 	const id = $props.id();
 	let loading: boolean = $state(false);
-
-	// Redirect to the login page if no session exists
-	$effect(() => {
-		if (!data.session) {
-			goto('/auth/login');
-		}
-	});
 </script>
 
 <CardContent class="p-6 md:p-8 max-w-md mx-auto flex flex-col gap-6">
