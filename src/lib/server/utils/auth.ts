@@ -1,8 +1,12 @@
-import type { User, SupabaseClient } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 import { error } from '@sveltejs/kit';
-import type { Database, Enums } from '$lib/types/database.types';
+import type { Enums } from '$lib/types/database.types';
+import { getRequestEvent } from '$app/server';
 
-export async function getRoles(supabase: SupabaseClient<Database>, user: User | null): Promise<Enums<"Role">[]> {
+export async function getRoles(user: User | null): Promise<Enums<'Role'>[]> {
+	const {
+		locals: { supabase }
+	} = getRequestEvent();
 	if (!user) {
 		return [];
 	}
@@ -16,11 +20,11 @@ export async function getRoles(supabase: SupabaseClient<Database>, user: User | 
 		throw error;
 	}
 
-	return roles.map(role => role.role);
+	return roles.map((role) => role.role);
 }
 
-export async function requireRole(supabase: SupabaseClient<Database>, user: User | null, role: Enums<"Role">) {
-	if (!(await getRoles(supabase, user)).includes(role)) {
+export async function requireRole(user: User | null, role: Enums<'Role'>) {
+	if (!(await getRoles(user)).includes(role)) {
 		error(403, 'Je hebt geen toegang tot deze pagina.');
 	}
 }

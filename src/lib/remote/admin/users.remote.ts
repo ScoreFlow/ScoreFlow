@@ -11,7 +11,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 	const { locals } = getRequestEvent();
 	const { user } = await locals.safeGetSession();
 
-	await requireRole(locals.supabase, user, 'admin');
+	await requireRole(user, 'admin');
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 	const {
@@ -25,7 +25,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
 	return await Promise.all(
 		rawUsers.map(async (user) => {
-			const roles = await getRoles(supabaseAdmin, user);
+			const roles = await getRoles(user);
 			return {
 				...user,
 				roles
@@ -48,7 +48,7 @@ export const inviteUser = form(async (data) => {
 	} = getRequestEvent();
 	const { user } = await locals.safeGetSession();
 
-	await requireRole(locals.supabase, user, 'admin');
+	await requireRole(user, 'admin');
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 
