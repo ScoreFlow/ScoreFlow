@@ -2,7 +2,8 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { ComponentProps } from 'svelte';
 	import { useSidebar } from '$lib/components/ui/sidebar';
-	import { PanelLeftCloseIcon, PanelLeftOpenIcon } from '@lucide/svelte';
+	import PanelLeftCloseIcon from '@lucide/svelte/icons/panel-left-close';
+	import PanelLeftOpenIcon from '@lucide/svelte/icons/panel-left-open';
 
 	let {
 		ref = $bindable(null),

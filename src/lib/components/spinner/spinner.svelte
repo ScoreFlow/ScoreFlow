@@ -22,7 +22,7 @@
 
 <script lang="ts">
 	import { cn } from '$lib/utils/ui';
-	import { LoaderCircleIcon } from '@lucide/svelte';
+	import LoaderCircleIcon from '@lucide/svelte/icons/loader-circle';
 
 	let { class: className, size = 'default', strokeWidth = 3, ...restProps }: SpinnerProps = $props();
 </script>

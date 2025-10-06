@@ -1,4 +1,7 @@
-import { DrumIcon, LayoutDashboardIcon, MusicIcon, SettingsIcon } from '@lucide/svelte';
+import DrumIcon from '@lucide/svelte/icons/drum';
+import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard';
+import MusicIcon from '@lucide/svelte/icons/music';
+import SettingsIcon from '@lucide/svelte/icons/settings';
 import type { Component } from 'svelte';
 
 export interface MenuItem {

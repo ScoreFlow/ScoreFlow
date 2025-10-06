@@ -6,7 +6,8 @@
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Spinner } from '$lib/components/spinner';
 
-	import { AlertCircleIcon, CheckIcon } from '@lucide/svelte';
+	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
+	import CheckIcon from '@lucide/svelte/icons/check';
 
 	import { resetPassword } from '$lib/remote/auth.remote';
 	import { goto } from '$app/navigation';

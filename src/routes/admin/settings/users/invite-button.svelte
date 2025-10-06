@@ -11,7 +11,9 @@
 		DialogTitle,
 		DialogTrigger
 	} from '$lib/components/ui/dialog';
-	import { AlertCircleIcon, CircleCheckIcon, PlusIcon } from '@lucide/svelte';
+	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
+	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
+	import PlusIcon from '@lucide/svelte/icons/plus';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Label } from '$lib/components/ui/label';
 	import { Spinner } from '$lib/components/spinner';
