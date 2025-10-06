@@ -3,6 +3,7 @@ import { type Handle } from '@sveltejs/kit';
 
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 import type { Database } from '$lib/types/database.types';
+import type { Session } from '@supabase/supabase-js';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
@@ -16,24 +17,24 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 
-	event.locals.safeGetSession = async () => {
+	event.locals.sessionPromise = (async () => {
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
 		if (!session) {
-			return { session: null, user: null };
+			return null;
 		}
 
 		const {
 			data: { user },
 			error
 		} = await event.locals.supabase.auth.getUser();
-		if (error) {
-			return { session: null, user: null };
+		if (error || !user) {
+			return null;
 		}
 
-		return { session, user };
-	};
+		return { ...session, user: user } as Session;
+	})();
 
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {

@@ -2,16 +2,16 @@ import { getRoles, requireRole } from '$lib/server/utils/auth';
 import { form, getRequestEvent, query } from '$app/server';
 import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
 import type { User } from '@supabase/supabase-js';
+import { Constants } from '$lib/types/database.types';
 
 export interface UserData extends User {
 	roles: string[];
 }
 
 export const getUsers = query(async (): Promise<UserData[]> => {
-	const { locals } = getRequestEvent();
-	const { user } = await locals.safeGetSession();
+	const { locals: {sessionPromise} } = getRequestEvent();
 
-	await requireRole(user, 'admin');
+	await requireRole((await sessionPromise)?.user, Constants.public.Enums.Role[0]);
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 	const {
@@ -43,12 +43,11 @@ export const inviteUser = form(async (data) => {
 	}
 
 	const {
-		locals,
+		locals: {sessionPromise},
 		url: { origin }
 	} = getRequestEvent();
-	const { user } = await locals.safeGetSession();
 
-	await requireRole(user, 'admin');
+	await requireRole((await sessionPromise)?.user, Constants.public.Enums.Role[0]);
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 
