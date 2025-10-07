@@ -41,7 +41,7 @@
 	{/if}
 {/snippet}
 
-<CardContent class="grid p-0 md:grid-cols-2">
+<CardContent class="grid p-0 md:grid-cols-2 wide-content">
 	<div class="p-6 md:p-8">
 		<div class="flex flex-col gap-6">
 

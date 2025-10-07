@@ -75,15 +75,20 @@ export const changePassword = form(async data => {
 		return { error: 'Wachtwoord moet minimaal 6 tekens lang zijn' };
 	}
 
-	const { error } = await locals.supabase.auth.updateUser({ password });
+	const { error: updateError } = await locals.supabase.auth.updateUser({ password });
 
-	if (error) {
-		if (error.code === 'same_password') {
+	if (updateError) {
+		if (updateError.code === 'same_password') {
 			return { error: 'Het nieuwe wachtwoord mag niet hetzelfde zijn als het oude wachtwoord' };
 		}
 
 		return { error: 'Er is iets misgegaan bij het instellen van je wachtwoord. Probeer het later opnieuw.' };
 	}
 
-	redirect(303, '/');
+	const { error: signOutError } = await locals.supabase.auth.signOut();
+	if (signOutError) {
+		throw signOutError;
+	}
+
+	redirect(303, '/auth/password-reset/success');
 });
