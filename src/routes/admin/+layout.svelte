@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { SidebarInset, SidebarProvider } from '$lib/components/ui/sidebar';
-	import { AdminSidebar, Trigger } from '$lib/components/sidebar';
+	import { SidebarInset, SidebarProvider, SidebarTrigger } from '$lib/components/ui/sidebar';
+	import { AdminSidebar } from '$lib/components/sidebar';
 	import { Copyright } from '$lib/components/copyright';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 
@@ -26,7 +26,7 @@
 		<header
 			class="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
 			<div class="flex items-center gap-2 px-4">
-				<Trigger />
+				<SidebarTrigger class="*:!size-5"/>
 			</div>
 		</header>
 		<div class="relative grow py-4 px-8">
