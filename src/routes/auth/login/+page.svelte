@@ -15,7 +15,6 @@
 
 	const id = $props.id();
 
-	let loading: boolean = $state(false);
 	let loadingOauth: Partial<{ [key in Provider]: boolean }> = $state({});
 </script>
 
@@ -65,11 +64,7 @@
 			</div>
 
 			<form
-				{...login.enhance(async ({ submit }) => {
-					loading = true;
-					await submit();
-					loading = false;
-				})}
+				{...login}
 				class="flex flex-col gap-6"
 			>
 
@@ -100,7 +95,7 @@
 				{/if}
 
 				<Button class="w-full" type="submit">
-					{#if (loading)}
+					{#if (login.pending)}
 						<Spinner />
 					{:else}
 						Inloggen

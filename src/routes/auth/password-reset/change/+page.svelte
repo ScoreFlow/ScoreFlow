@@ -13,7 +13,6 @@
 	let { data } = $props();
 
 	const id = $props.id();
-	let loading: boolean = $state(false);
 </script>
 
 <CardContent class="p-6 md:p-8 max-w-md mx-auto flex flex-col gap-6">
@@ -25,11 +24,7 @@
 	</div>
 
 	<form
-		{...changePassword.enhance(async ({ submit }) => {
-			loading = true;
-			await submit();
-			loading = false;
-		})}
+		{...changePassword}
 		class="flex flex-col gap-6"
 	>
 		<div class="grid gap-3">
@@ -51,7 +46,7 @@
 		{/if}
 
 		<Button class="w-full" type="submit">
-			{#if loading}
+			{#if changePassword.pending}
 				<Spinner />
 			{:else}
 				Stel wachtwoord in

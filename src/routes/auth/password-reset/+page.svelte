@@ -14,7 +14,6 @@
 	let { data } = $props();
 
 	const id = $props.id();
-	let loading: boolean = $state(false);
 </script>
 
 <CardContent class="p-6 md:p-8 max-w-md mx-auto flex flex-col gap-6">
@@ -27,11 +26,7 @@
 	</div>
 
 	<form
-		{...resetPassword.enhance(async ({ submit }) => {
-			loading = true;
-			await submit();
-			loading = false;
-		})}
+		{...resetPassword}
 		class="flex flex-col gap-6"
 	>
 		<div class="grid gap-3">
@@ -65,7 +60,7 @@
 
 
 		<Button class="w-full" type="submit">
-			{#if loading}
+			{#if resetPassword.pending}
 				<Spinner />
 			{:else}
 				Stuur herstel-link

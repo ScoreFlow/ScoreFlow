@@ -19,7 +19,6 @@
 	import { Spinner } from '$lib/components/spinner';
 	import { invalidateAll } from '$app/navigation';
 
-	let inviteLoading = $state(false);
 	let form: HTMLFormElement | undefined = $state();
 	const id = $props.id();
 </script>
@@ -32,13 +31,11 @@
 	</DialogTrigger>
 	<DialogContent>
 		<form {...inviteUser.enhance(async ({ submit }: {submit: () => Promise<void>}) => {
-			inviteLoading = true;
 			await submit();
 			if (inviteUser.result?.success) {
 				form?.reset();
 				await invalidateAll();
 			}
-			inviteLoading = false;
 		})} bind:this={form}>
 			<DialogHeader>
 				<DialogTitle>
@@ -71,7 +68,7 @@
 			</div>
 			<DialogFooter>
 				<Button type="submit">
-					{#if inviteLoading}
+					{#if inviteUser.pending}
 						<Spinner size="sm" />
 					{:else}
 						Toevoegen
