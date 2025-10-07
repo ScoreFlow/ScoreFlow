@@ -5,6 +5,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { type UserData } from '$lib/remote/admin/users.remote';
 	import InviteButton from './invite-button.svelte';
+	import { getRoleDisplayName } from '$lib/utils/auth';
 
 	const columns: ColumnDef<UserData>[] = [
 		{
@@ -33,7 +34,7 @@
 
 <div class="flex flex-col gap-2">
 	<div class="flex justify-end">
-		<InviteButton/>
+		<InviteButton />
 	</div>
 	<div class="rounded-md border">
 		<Table>
@@ -67,12 +68,6 @@
 							</TableCell>
 						{/each}
 					</TableRow>
-				{:else}
-					<TableRow>
-						<TableCell colspan={columns.length} class="h-24 text-center">
-							Er zijn nog geen gebruikers.
-						</TableCell>
-					</TableRow>
 				{/each}
 			</TableBody>
 		</Table>
@@ -80,13 +75,13 @@
 </div>
 
 {#snippet Roles({ row }: {row: UserData})}
-	{#if row.roles.includes('admin')}
-		<Badge variant="secondary">
-			Beheerder
-		</Badge>
+	{#if row.roles.length === 0}
+		<span class="text-muted-foreground">-</span>
 	{:else}
-		<Badge variant="outline">
-			Gebruiker
-		</Badge>
+		{#each row.roles as role}
+			<Badge variant="secondary">
+				{getRoleDisplayName(role)}
+			</Badge>
+		{/each}
 	{/if}
 {/snippet}
