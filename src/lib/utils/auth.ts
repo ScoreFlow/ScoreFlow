@@ -1,4 +1,5 @@
 import type { Provider } from '@supabase/supabase-js';
+import type { Enums } from '$lib/types/database.types';
 
 const providers: Provider[] = [
 	'apple',
@@ -46,4 +47,12 @@ const providerDisplayNames: Partial<Record<Provider, string>> = {
 
 export function getProviderDisplayName(provider: Provider): string | null {
 	return providerDisplayNames[provider] ?? null;
+}
+
+const roleDisplayNames: Record<Enums<"Role">, string> = {
+	admin: 'Beheerder'
+} as const;
+
+export function getRoleDisplayName(role: Enums<"Role">): string {
+	return roleDisplayNames[role];
 }
