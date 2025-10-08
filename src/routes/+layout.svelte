@@ -1,18 +1,17 @@
 <script lang="ts">
 	import '../app.css';
-	import type { LayoutProps } from './$types';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
 	import { Spinner } from '$lib/components/spinner';
 
-	let { data, children }: LayoutProps = $props();
-	let { sessionPromise, supabase } = $derived(data);
+	let { data, children } = $props();
+	let { session, supabase } = $derived(data);
 
 	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange(async (_, newSession) => {
-			if (newSession?.expires_at !== (await sessionPromise)?.expires_at) {
-				await invalidate('supabase:auth');
+		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
+			if (newSession?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
 			}
 		})
 
