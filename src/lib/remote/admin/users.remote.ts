@@ -9,9 +9,13 @@ export interface UserData extends User {
 }
 
 export const getUsers = query(async (): Promise<UserData[]> => {
-	const { locals: {sessionPromise} } = getRequestEvent();
+	const {
+		locals: { getSession }
+	} = getRequestEvent();
 
-	await requireRole((await sessionPromise)?.user, Constants.public.Enums.Role[0]);
+	const session = await getSession();
+
+	await requireRole(session?.user, Constants.public.Enums.Role[0]);
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 	const {
@@ -43,11 +47,13 @@ export const inviteUser = form(async (data) => {
 	}
 
 	const {
-		locals: {sessionPromise},
+		locals: { getSession },
 		url: { origin }
 	} = getRequestEvent();
 
-	await requireRole((await sessionPromise)?.user, Constants.public.Enums.Role[0]);
+	const session = await getSession();
+
+	await requireRole(session?.user, Constants.public.Enums.Role[0]);
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 

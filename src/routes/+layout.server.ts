@@ -1,11 +1,11 @@
 import type { LayoutServerLoad } from './$types';
 import { error, redirect } from '@sveltejs/kit';
-import { requireRole } from '$lib/server/utils/auth';
+import { getRoles, requireRole } from '$lib/server/utils/auth';
 
-export const load: LayoutServerLoad = async ({ cookies, locals: { sessionPromise }, url }) => {
-	const user = (await sessionPromise)?.user;
+export const load: LayoutServerLoad = async ({ cookies, locals: { getSession }, url }) => {
+	const session = await getSession();
 
-	if (user) {
+	if (session?.user) {
 		if (url.pathname === '/auth/login') redirect(303, '/');
 		if (url.pathname == '/auth/password-reset') redirect(303, '/auth/password-reset/change');
 	} else {
@@ -14,11 +14,14 @@ export const load: LayoutServerLoad = async ({ cookies, locals: { sessionPromise
 	}
 
 	if (url.pathname.startsWith('/admin')) {
-		await requireRole(user, 'admin');
+		await requireRole(session?.user, 'admin');
 	}
 
+	const rolesPromise = getRoles(session?.user);
+
 	return {
-		sessionPromise,
+		session,
+		rolesPromise,
 		cookies: cookies.getAll()
 	};
 };

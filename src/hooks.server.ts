@@ -17,7 +17,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 
-	event.locals.sessionPromise = (async () => {
+	/**
+	 * Retrieves the session information and validated user data.
+	 *
+	 * @function
+	 * @name event.locals.getSession
+	 * @returns {Promise<Session|null>} A promise that resolves to the session object if it exists, or null if no session data is available.
+	 */
+	event.locals.getSession = async () => {
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
@@ -34,7 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 
 		return { ...session, user: user } as Session;
-	})();
+	};
 
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {

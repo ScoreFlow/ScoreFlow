@@ -1,9 +1,10 @@
 import { getRoles } from '$lib/server/utils/auth';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { sessionPromise } }) => {
+export const load: PageServerLoad = async ({ parent }) => {
+	const { session } = await parent();
+
 	return {
-		session: await sessionPromise,
-		roles: await getRoles((await sessionPromise)?.user),
+		roles: await getRoles(session?.user)
 	};
 };
