@@ -2,9 +2,11 @@ import { createServerClient } from '@supabase/ssr';
 import { type Handle } from '@sveltejs/kit';
 
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import type { Database } from '$lib/types/database.types';
+import type { Session } from '@supabase/supabase-js';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+	event.locals.supabase = createServerClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		cookies: {
 			getAll: () => event.cookies.getAll(),
 			setAll: (cookiesToSet) => {
@@ -15,23 +17,30 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 
-	event.locals.safeGetSession = async () => {
+	/**
+	 * Retrieves the session information and validated user data.
+	 *
+	 * @function
+	 * @name event.locals.getSession
+	 * @returns {Promise<Session|null>} A promise that resolves to the session object if it exists, or null if no session data is available.
+	 */
+	event.locals.getSession = async () => {
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
 		if (!session) {
-			return { session: null, user: null };
+			return null;
 		}
 
 		const {
 			data: { user },
 			error
 		} = await event.locals.supabase.auth.getUser();
-		if (error) {
-			return { session: null, user: null };
+		if (error || !user) {
+			return null;
 		}
 
-		return { session, user };
+		return { ...session, user: user } as Session;
 	};
 
 	return resolve(event, {
