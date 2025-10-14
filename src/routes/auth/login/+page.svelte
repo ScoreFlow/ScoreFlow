@@ -2,16 +2,16 @@
 	import type { Provider } from '@supabase/supabase-js';
 	import { getProviderDisplayName } from '$lib/utils/auth';
 
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Button } from '$lib/components/ui/button';
 	import { CardContent } from '$lib/components/ui/card';
 	import { Input } from '$lib/components/ui/input';
+	import { Issues } from '$lib/components/issues';
 	import { Label } from '$lib/components/ui/label';
 	import { Spinner } from '$lib/components/spinner';
 
-	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 
 	import { login, oauth } from '$lib/remote/auth.remote';
+	import { loginSchema } from '$lib/schemas/remote/auth';
 
 	const id = $props.id();
 
@@ -20,7 +20,7 @@
 
 {#snippet oauthForm(provider: Provider)}
 	{@const form = oauth.for(provider)}
-	<form {...form} onsubmit={() => loadingOauth[provider] = true}>
+	<form {...form} onsubmit={() => loadingOauth[provider] = true} class="flex flex-col gap-2">
 		<input type="hidden" name="provider" value={provider}>
 		<Button type="submit" variant="outline" class="w-full">
 			{#if (loadingOauth[provider] ?? false)}
@@ -32,13 +32,9 @@
 				Inloggen met {getProviderDisplayName(provider)}
 			{/if}
 		</Button>
+
+		<Issues issues={form.fields.allIssues()} />
 	</form>
-	{#if form.result}
-		<Alert variant="destructive">
-			<AlertCircleIcon />
-			<AlertDescription>{form.result.error}</AlertDescription>
-		</Alert>
-	{/if}
 {/snippet}
 
 <CardContent class="grid p-0 md:grid-cols-2 wide-content">
@@ -64,19 +60,14 @@
 			</div>
 
 			<form
-				{...login}
+				{...login.preflight(loginSchema)}
 				class="flex flex-col gap-6"
 			>
 
 				<div class="grid gap-3">
 					<Label for="email-{id}">E-mailadres</Label>
-					<Input
-						id="email-{id}"
-						name="email"
-						placeholder="E-mailadres"
-						required
-						type="email"
-					/>
+					<Input {...login.fields.email.as('email')} placeholder="E-mailadres" required />
+					<Issues issues={login.fields.email.issues()} />
 				</div>
 
 				<div class="grid gap-3">
@@ -84,15 +75,11 @@
 						<Label for="password-{id}">Wachtwoord</Label>
 						<Button class="ml-auto px-0" href="/auth/password-reset" variant="link">Wachtwoord vergeten?</Button>
 					</div>
-					<Input id="password-{id}" name="password" placeholder="Wachtwoord" required type="password" />
+					<Input {...login.fields.password.as('password')} placeholder="Wachtwoord" required />
+					<Issues issues={login.fields.password.issues()} />
 				</div>
 
-				{#if login.result}
-					<Alert variant="destructive">
-						<AlertCircleIcon />
-						<AlertDescription>{login.result.error}</AlertDescription>
-					</Alert>
-				{/if}
+				<Issues issues={login.fields.issues()} />
 
 				<Button class="w-full" type="submit">
 					{#if (login.pending)}

@@ -3,14 +3,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Spinner } from '$lib/components/spinner';
 
-	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
-
 	import { changePassword } from '$lib/remote/auth.remote';
-
-	let { data } = $props();
+	import { Issues } from '$lib/components/issues';
+	import { changePasswordSchema } from '$lib/schemas/remote/auth';
 
 	const id = $props.id();
 </script>
@@ -24,26 +21,16 @@
 	</div>
 
 	<form
-		{...changePassword}
+		{...changePassword.preflight(changePasswordSchema)}
 		class="flex flex-col gap-6"
 	>
 		<div class="grid gap-3">
 			<Label for="password-{id}">Nieuw wachtwoord</Label>
-			<Input
-				id="password-{id}"
-				name="password"
-				placeholder="Nieuw wachtwoord"
-				required
-				type="password"
-			/>
+			<Input {...changePassword.fields.password.as('password')} id="password-{id}" placeholder="Nieuw wachtwoord"
+						 required />
 		</div>
 
-		{#if changePassword.result?.error}
-			<Alert variant="destructive">
-				<AlertCircleIcon />
-				<AlertDescription>{changePassword.result.error}</AlertDescription>
-			</Alert>
-		{/if}
+		<Issues issues={changePassword.fields.allIssues()} />
 
 		<Button class="w-full" type="submit">
 			{#if changePassword.pending}

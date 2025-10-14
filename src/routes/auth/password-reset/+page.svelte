@@ -5,13 +5,11 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Spinner } from '$lib/components/spinner';
-
-	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 	import CheckIcon from '@lucide/svelte/icons/check';
 
 	import { resetPassword } from '$lib/remote/auth.remote';
-
-	let { data } = $props();
+	import { Issues } from '$lib/components/issues';
+	import { resetPasswordSchema } from '$lib/schemas/remote/auth';
 
 	const id = $props.id();
 </script>
@@ -26,27 +24,14 @@
 	</div>
 
 	<form
-		{...resetPassword}
-		class="flex flex-col gap-6"
+		{...resetPassword.preflight(resetPasswordSchema)}
+		class="flex flex-col gap-3"
 	>
 		<div class="grid gap-3">
 			<Label for="email-{id}">E-mailadres</Label>
-			<Input
-				id="email-{id}"
-				name="email"
-				placeholder="E-mailadres"
-				required
-				type="email"
-			/>
+			<Input {...resetPassword.fields.email.as('email')} id="email-{id}" placeholder="E-mailadres" required />
+			<Issues issues={resetPassword.fields.allIssues()} />
 		</div>
-
-		{#if resetPassword.result?.error}
-			<Alert variant="destructive">
-				<AlertCircleIcon />
-				<AlertDescription>{resetPassword.result.error}</AlertDescription>
-			</Alert>
-		{/if}
-
 
 		{#if resetPassword.result?.success}
 			<Alert>
