@@ -11,13 +11,13 @@
 		DialogTitle,
 		DialogTrigger
 	} from '$lib/components/ui/dialog';
-	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
 	import PlusIcon from '@lucide/svelte/icons/plus';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Label } from '$lib/components/ui/label';
 	import { Spinner } from '$lib/components/spinner';
 	import { invalidateAll } from '$app/navigation';
+	import { Issues } from '$lib/components/issues';
 
 	let form: HTMLFormElement | undefined = $state();
 	const id = $props.id();
@@ -50,14 +50,9 @@
 				<Input class="grow" id="name-{id}" name="name" required type="text" />
 
 				<Label class="text-right" for="email-{id}">E-mailadres</Label>
-				<Input class="grow" id="email-{id}" name="email" required type="email" />
+				<Input {...inviteUser.fields.email.as('email')} class="grow" id="email-{id}" required />
 
-				{#if (inviteUser.result?.error)}
-					<Alert variant="destructive" class="col-span-2">
-						<AlertCircleIcon />
-						<AlertDescription>{inviteUser.result.error}</AlertDescription>
-					</Alert>
-				{/if}
+				<Issues class="col-span-2" issues={inviteUser.fields.allIssues()} />
 
 				{#if (inviteUser.result?.success)}
 					<Alert class="col-span-2">

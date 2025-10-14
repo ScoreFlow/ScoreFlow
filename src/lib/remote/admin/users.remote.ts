@@ -3,6 +3,7 @@ import { form, getRequestEvent, query } from '$app/server';
 import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
 import type { User } from '@supabase/supabase-js';
 import { Constants, type Enums } from '$lib/types/database.types';
+import { inviteUserSchema } from '$lib/schemas/remote/admin/users';
 
 export interface UserData extends User {
 	roles: Enums<'Role'>[];
@@ -38,14 +39,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 	);
 });
 
-export const inviteUser = form(async (data) => {
-	const name = data.get('name') as string | null;
-	const email = data.get('email') as string | null;
-
-	if (!email || !name) {
-		return { error: 'Vul alle velden in.' };
-	}
-
+export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid) => {
 	const {
 		locals: { getSession },
 		url: { origin }
@@ -64,12 +58,15 @@ export const inviteUser = form(async (data) => {
 
 	if (error) {
 		if (error.code === 'email_exists') {
-			return {
-				error:
+			invalid(
+				invalid.email(
 					'Dit e-mailadres is al in gebruik. Vraag de gebruiker om hun wachtwoord te herstellen.'
-			};
+				)
+			);
+		} else {
+			invalid('Het is niet gelukt om de gebruiker uit te nodigen. Probeer het later opnieuw.');
 		}
-		return { error: 'Het is niet gelukt om de gebruiker aan te maken. Probeer het later opnieuw.' };
+		return;
 	}
 
 	return { success: true };
