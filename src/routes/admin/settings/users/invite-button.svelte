@@ -15,7 +15,7 @@
 	import PlusIcon from '@lucide/svelte/icons/plus';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
 	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/spinner';
+	import { Spinner } from '$lib/components/ui/spinner';
 	import { invalidateAll } from '$app/navigation';
 	import { Issues } from '$lib/components/issues';
 
@@ -64,7 +64,7 @@
 			<DialogFooter>
 				<Button type="submit">
 					{#if inviteUser.pending}
-						<Spinner size="sm" />
+						<Spinner class="h-4 w-4" />
 					{:else}
 						Toevoegen
 					{/if}

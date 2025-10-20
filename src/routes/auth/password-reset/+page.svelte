@@ -4,7 +4,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import { Spinner } from '$lib/components/spinner';
+	import { Spinner } from '$lib/components/ui/spinner';
 	import CheckIcon from '@lucide/svelte/icons/check';
 
 	import { resetPassword } from '$lib/remote/auth.remote';
