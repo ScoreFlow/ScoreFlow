@@ -47,7 +47,7 @@
 			</DialogHeader>
 			<div class="grid grid-cols-[auto_1fr] gap-4 py-4">
 				<Label class="text-right" for="name-{id}">Naam</Label>
-				<Input class="grow" id="name-{id}" name="name" required type="text" />
+				<Input {...inviteUser.fields.name.as('text')} class="grow" id="name-{id}" required />
 
 				<Label class="text-right" for="email-{id}">E-mailadres</Label>
 				<Input {...inviteUser.fields.email.as('email')} class="grow" id="email-{id}" required />
