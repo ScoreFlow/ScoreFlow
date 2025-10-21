@@ -3,7 +3,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Spinner } from '$lib/components/spinner';
+	import { Spinner } from '$lib/components/ui/spinner';
 
 	let { data, children } = $props();
 	let { session, supabase } = $derived(data);
@@ -28,7 +28,7 @@
 
 	{#snippet pending()}
 		<div class="h-screen flex items-center justify-center">
-			<Spinner size="lg"/>
+			<Spinner class="size-8"/>
 		</div>
 	{/snippet}
 </svelte:boundary>

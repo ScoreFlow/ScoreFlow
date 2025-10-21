@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/spinner';
+	import { Spinner } from '$lib/components/ui/spinner';
 
 	import { changePassword } from '$lib/remote/auth.remote';
 	import { Issues } from '$lib/components/issues';

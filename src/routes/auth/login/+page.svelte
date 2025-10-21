@@ -7,7 +7,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Issues } from '$lib/components/issues';
 	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/spinner';
+	import { Spinner } from '$lib/components/ui/spinner';
 
 
 	import { login, oauth } from '$lib/remote/auth.remote';
