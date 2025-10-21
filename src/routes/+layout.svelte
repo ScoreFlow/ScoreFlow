@@ -28,7 +28,7 @@
 
 	{#snippet pending()}
 		<div class="h-screen flex items-center justify-center">
-			<Spinner class="h-8 w-8"/>
+			<Spinner class="size-8"/>
 		</div>
 	{/snippet}
 </svelte:boundary>

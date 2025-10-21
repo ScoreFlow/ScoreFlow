@@ -64,7 +64,7 @@
 			<DialogFooter>
 				<Button type="submit">
 					{#if inviteUser.pending}
-						<Spinner class="h-4 w-4" />
+						<Spinner class="size-4" />
 					{:else}
 						Toevoegen
 					{/if}
