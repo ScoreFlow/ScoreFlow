@@ -2,10 +2,6 @@ name: Svelte Check
 
 on: pull_request
 
-permissions:
-  pull-requests: write
-  issues: write
-    
 jobs:
   svelte-check:
     runs-on: ubuntu-latest
@@ -26,7 +22,4 @@ jobs:
         run: cp .env.example .env
 
       - name: Svelte Check
-        uses: ghostdevv/svelte-check-action@v1
-        with:
-          failOnError: 'true'
-          failOnWarning: 'true'
+        run: npm run check
