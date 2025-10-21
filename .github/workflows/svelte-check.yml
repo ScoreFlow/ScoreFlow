@@ -1,6 +1,10 @@
 name: Svelte Check
 
 on: pull_request
+
+permissions:
+  pull-requests: write
+  issues: write
     
 jobs:
   svelte-check:
