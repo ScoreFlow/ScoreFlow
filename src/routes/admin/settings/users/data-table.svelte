@@ -3,7 +3,7 @@
 	import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table';
 	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '$lib/components/ui/table';
 	import { Badge } from '$lib/components/ui/badge';
-	import { type UserData } from '$lib/remote/admin/users.remote';
+	import { type UserData } from '$lib/types/users.types';
 	import InviteButton from './invite-button.svelte';
 	import { getRoleDisplayName } from '$lib/utils/auth';
 
