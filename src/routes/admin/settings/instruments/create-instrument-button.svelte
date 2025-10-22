@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { inviteUser } from '$lib/remote/admin/users.remote';
+	import { createInstrument } from '$lib/remote/admin/scores.remote';
 	import { Input } from '$lib/components/ui/input';
 	import {
 		Dialog,
 		DialogContent,
-		DialogDescription,
 		DialogFooter,
 		DialogHeader,
 		DialogTitle,
@@ -17,7 +16,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Spinner } from '$lib/components/ui/spinner';
 	import { Issues } from '$lib/components/issues';
-	import { inviteUserSchema } from '$lib/schemas/remote/admin/users';
+	import { createInstrumentSchema } from '$lib/schemas/remote/admin/scores';
 
 	const id = $props.id();
 </script>
@@ -26,37 +25,31 @@
 <Dialog>
 	<DialogTrigger class={buttonVariants({variant: 'outline', size: 'sm'})}>
 		<PlusIcon />
-		<span class="hidden lg:inline">Gebruiker toevoegen</span>
+		<span class="hidden lg:inline">Instrument toevoegen</span>
 	</DialogTrigger>
 	<DialogContent>
-		<form {...inviteUser.preflight(inviteUserSchema)}>
+		<form {...createInstrument.preflight(createInstrumentSchema)}>
 			<DialogHeader>
 				<DialogTitle>
-					Gebruiker toevoegen
+					Instrument toevoegen
 				</DialogTitle>
-				<DialogDescription>
-					Vul naam en e-mailadres in om een gebruiker toe te voegen.
-				</DialogDescription>
 			</DialogHeader>
 			<div class="grid grid-cols-[auto_1fr] gap-4 py-4">
 				<Label class="text-right" for="name-{id}">Naam</Label>
-				<Input {...inviteUser.fields.name.as('text')} class="grow" id="name-{id}" required />
+				<Input {...createInstrument.fields.name.as('text')} class="grow" id="name-{id}" required />
 
-				<Label class="text-right" for="email-{id}">E-mailadres</Label>
-				<Input {...inviteUser.fields.email.as('email')} class="grow" id="email-{id}" required />
+				<Issues class="col-span-2" issues={createInstrument.fields.allIssues()} />
 
-				<Issues class="col-span-2" issues={inviteUser.fields.allIssues()} />
-
-				{#if (inviteUser.result?.success)}
+				{#if (createInstrument.result?.success)}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
-						<AlertDescription>Er is een e-mail met een uitnodiging verstuurd</AlertDescription>
+						<AlertDescription>Het instrument is toegevoegd</AlertDescription>
 					</Alert>
 				{/if}
 			</div>
 			<DialogFooter>
 				<Button type="submit">
-					{#if inviteUser.pending}
+					{#if createInstrument.pending}
 						<Spinner />
 					{:else}
 						Toevoegen
