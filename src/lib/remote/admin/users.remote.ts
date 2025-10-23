@@ -1,13 +1,9 @@
 import { getRoles, requireRole } from '$lib/server/utils/auth';
 import { form, getRequestEvent, query } from '$app/server';
 import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
-import type { User } from '@supabase/supabase-js';
-import { Constants, type Enums } from '$lib/types/database.types';
+import { Constants } from '$lib/types/database.types';
 import { inviteUserSchema } from '$lib/schemas/remote/admin/users';
-
-export interface UserData extends User {
-	roles: Enums<'Role'>[];
-}
+import type { UserData } from '$lib/types/users.types';
 
 export const getUsers = query(async (): Promise<UserData[]> => {
 	const {

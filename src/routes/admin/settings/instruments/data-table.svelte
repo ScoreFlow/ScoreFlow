@@ -1,40 +1,29 @@
 <script lang="ts">
 	import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core';
-	import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table';
+	import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table';
 	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '$lib/components/ui/table';
-	import { Badge } from '$lib/components/ui/badge';
-	import { type UserData } from '$lib/types/users.types';
-	import InviteButton from './invite-button.svelte';
-	import { getRoleDisplayName } from '$lib/utils/auth';
+	import CreateInstrumentButton from './create-instrument-button.svelte';
+	import type { Tables } from '$lib/types/database.types';
 
-	const columns: ColumnDef<UserData>[] = [
+	const columns: ColumnDef<Tables<'instruments'>>[] = [
 		{
-			accessorKey: 'email',
-			header: 'E-mailadres'
-		},
-		{
-			accessorKey: 'user_metadata.full_name',
-			header: 'Naam'
-		},
-		{
-			accessorKey: 'roles',
-			header: 'Rol',
-			cell: ({ row }) => renderSnippet(Roles, { row: row.original })
+			accessorKey: 'name',
+			header: 'Instrument'
 		}
 	];
 
-	let { data }: { data: UserData[] } = $props();
+	let { data }: { data: Tables<'instruments'>[] } = $props();
 
-	const table = createSvelteTable({
+	let table = $derived(createSvelteTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel()
-	});
+	}));
 </script>
 
 <div class="flex flex-col gap-2">
 	<div class="flex justify-end">
-		<InviteButton />
+		<CreateInstrumentButton />
 	</div>
 	<div class="rounded-md border">
 		<Table>
@@ -73,15 +62,3 @@
 		</Table>
 	</div>
 </div>
-
-{#snippet Roles({ row }: {row: UserData})}
-	{#if row.roles.length === 0}
-		<span class="text-muted-foreground">-</span>
-	{:else}
-		{#each row.roles as role}
-			<Badge variant="secondary">
-				{getRoleDisplayName(role)}
-			</Badge>
-		{/each}
-	{/if}
-{/snippet}

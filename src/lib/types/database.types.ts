@@ -221,17 +221,14 @@ export type Database = {
         Row: {
           id: number
           name: string
-          tuning: number
         }
         Insert: {
           id?: number
           name: string
-          tuning?: number
         }
         Update: {
           id?: number
           name?: string
-          tuning?: number
         }
         Relationships: []
       }
