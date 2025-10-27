@@ -7,354 +7,354 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
-  }
-  public: {
-    Tables: {
-      concert_orchestras: {
-        Row: {
-          concert_id: number
-          id: number
-          orchestra_id: number
-        }
-        Insert: {
-          concert_id: number
-          id?: number
-          orchestra_id: number
-        }
-        Update: {
-          concert_id?: number
-          id?: number
-          orchestra_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "concert_orchestras_concert_id_fkey"
-            columns: ["concert_id"]
-            isOneToOne: false
-            referencedRelation: "concerts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "concert_orchestras_orchestra_id_fkey"
-            columns: ["orchestra_id"]
-            isOneToOne: false
-            referencedRelation: "orchestras"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      concert_pieces: {
-        Row: {
-          concert_id: number
-          id: number
-          piece_id: number
-        }
-        Insert: {
-          concert_id: number
-          id?: number
-          piece_id: number
-        }
-        Update: {
-          concert_id?: number
-          id?: number
-          piece_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "concert_pieces_concert_id_fkey"
-            columns: ["concert_id"]
-            isOneToOne: false
-            referencedRelation: "concerts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "concert_pieces_piece_id_fkey"
-            columns: ["piece_id"]
-            isOneToOne: false
-            referencedRelation: "pieces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      concerts: {
-        Row: {
-          active: boolean
-          id: number
-          name: string
-        }
-        Insert: {
-          active?: boolean
-          id?: number
-          name: string
-        }
-        Update: {
-          active?: boolean
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      file_instruments: {
-        Row: {
-          file_id: number
-          id: number
-          instrument_id: number
-        }
-        Insert: {
-          file_id: number
-          id?: number
-          instrument_id: number
-        }
-        Update: {
-          file_id?: number
-          id?: number
-          instrument_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "file_instruments_file_id_fkey"
-            columns: ["file_id"]
-            isOneToOne: false
-            referencedRelation: "files"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "file_instruments_instrument_id_fkey"
-            columns: ["instrument_id"]
-            isOneToOne: false
-            referencedRelation: "instruments"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      files: {
-        Row: {
-          file_path: string
-          id: number
-          piece_id: number
-          version: number
-        }
-        Insert: {
-          file_path: string
-          id?: number
-          piece_id: number
-          version?: number
-        }
-        Update: {
-          file_path?: string
-          id?: number
-          piece_id?: number
-          version?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "files_piece_id_fkey"
-            columns: ["piece_id"]
-            isOneToOne: false
-            referencedRelation: "pieces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      global_settings: {
-        Row: {
-          id: number
-          key: string
-          private: boolean
-          value: string | null
-        }
-        Insert: {
-          id?: number
-          key: string
-          private?: boolean
-          value?: string | null
-        }
-        Update: {
-          id?: number
-          key?: string
-          private?: boolean
-          value?: string | null
-        }
-        Relationships: []
-      }
-      instrument_concert_orchestras: {
-        Row: {
-          id: number
-          instrument_id: number
-          orchestra_id: number
-          user_id: string
-        }
-        Insert: {
-          id?: number
-          instrument_id: number
-          orchestra_id: number
-          user_id: string
-        }
-        Update: {
-          id?: number
-          instrument_id?: number
-          orchestra_id?: number
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "instrument_concert_orchestras_instrument_id_fkey"
-            columns: ["instrument_id"]
-            isOneToOne: false
-            referencedRelation: "instruments"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "instrument_concert_orchestras_orchestra_id_fkey"
-            columns: ["orchestra_id"]
-            isOneToOne: false
-            referencedRelation: "orchestras"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      instruments: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      orchestra_pieces: {
-        Row: {
-          id: number
-          orchestra_id: number
-          piece_id: number
-        }
-        Insert: {
-          id?: number
-          orchestra_id: number
-          piece_id: number
-        }
-        Update: {
-          id?: number
-          orchestra_id?: number
-          piece_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "orchestra_pieces_orchestra_id_fkey"
-            columns: ["orchestra_id"]
-            isOneToOne: false
-            referencedRelation: "orchestras"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "orchestra_pieces_piece_id_fkey"
-            columns: ["piece_id"]
-            isOneToOne: false
-            referencedRelation: "pieces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      orchestras: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      pieces: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      user_roles: {
-        Row: {
-          id: number
-          role: Database["public"]["Enums"]["Role"]
-          user_id: string
-        }
-        Insert: {
-          id?: number
-          role: Database["public"]["Enums"]["Role"]
-          user_id: string
-        }
-        Update: {
-          id?: number
-          role?: Database["public"]["Enums"]["Role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
-      user_settings: {
-        Row: {
-          id: number
-          key: string
-          private: boolean
-          readonly: boolean
-          user_id: string
-          value: string | null
-        }
-        Insert: {
-          id?: number
-          key: string
-          private?: boolean
-          readonly?: boolean
-          user_id?: string
-          value?: string | null
-        }
-        Update: {
-          id?: number
-          key?: string
-          private?: boolean
-          readonly?: boolean
-          user_id?: string
-          value?: string | null
-        }
-        Relationships: []
-      }
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      [_ in never]: never
-    }
-    Enums: {
-      Role: "admin"
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+	// Allows to automatically instantiate createClient with right options
+	// instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+	__InternalSupabase: {
+		PostgrestVersion: '13.0.4';
+	};
+	public: {
+		Tables: {
+			concert_groups: {
+				Row: {
+					concert_id: number;
+					group_id: number;
+					id: number;
+				};
+				Insert: {
+					concert_id: number;
+					group_id: number;
+					id?: number;
+				};
+				Update: {
+					concert_id?: number;
+					group_id?: number;
+					id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'concert_groups_concert_id_fkey';
+						columns: ['concert_id'];
+						isOneToOne: false;
+						referencedRelation: 'concerts';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'concert_groups_group_id_fkey';
+						columns: ['group_id'];
+						isOneToOne: false;
+						referencedRelation: 'groups';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			concert_pieces: {
+				Row: {
+					concert_id: number;
+					id: number;
+					piece_id: number;
+				};
+				Insert: {
+					concert_id: number;
+					id?: number;
+					piece_id: number;
+				};
+				Update: {
+					concert_id?: number;
+					id?: number;
+					piece_id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'concert_pieces_concert_id_fkey';
+						columns: ['concert_id'];
+						isOneToOne: false;
+						referencedRelation: 'concerts';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'concert_pieces_piece_id_fkey';
+						columns: ['piece_id'];
+						isOneToOne: false;
+						referencedRelation: 'pieces';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			concerts: {
+				Row: {
+					active: boolean;
+					id: number;
+					name: string;
+				};
+				Insert: {
+					active?: boolean;
+					id?: number;
+					name: string;
+				};
+				Update: {
+					active?: boolean;
+					id?: number;
+					name?: string;
+				};
+				Relationships: [];
+			};
+			file_instruments: {
+				Row: {
+					file_id: number;
+					id: number;
+					instrument_id: number;
+				};
+				Insert: {
+					file_id: number;
+					id?: number;
+					instrument_id: number;
+				};
+				Update: {
+					file_id?: number;
+					id?: number;
+					instrument_id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'file_instruments_file_id_fkey';
+						columns: ['file_id'];
+						isOneToOne: false;
+						referencedRelation: 'files';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'file_instruments_instrument_id_fkey';
+						columns: ['instrument_id'];
+						isOneToOne: false;
+						referencedRelation: 'instruments';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			files: {
+				Row: {
+					file_path: string;
+					id: number;
+					piece_id: number;
+					version: number;
+				};
+				Insert: {
+					file_path: string;
+					id?: number;
+					piece_id: number;
+					version?: number;
+				};
+				Update: {
+					file_path?: string;
+					id?: number;
+					piece_id?: number;
+					version?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'files_piece_id_fkey';
+						columns: ['piece_id'];
+						isOneToOne: false;
+						referencedRelation: 'pieces';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			global_settings: {
+				Row: {
+					id: number;
+					key: string;
+					private: boolean;
+					value: string | null;
+				};
+				Insert: {
+					id?: number;
+					key: string;
+					private?: boolean;
+					value?: string | null;
+				};
+				Update: {
+					id?: number;
+					key?: string;
+					private?: boolean;
+					value?: string | null;
+				};
+				Relationships: [];
+			};
+			group_pieces: {
+				Row: {
+					group_id: number;
+					id: number;
+					piece_id: number;
+				};
+				Insert: {
+					group_id: number;
+					id?: number;
+					piece_id: number;
+				};
+				Update: {
+					group_id?: number;
+					id?: number;
+					piece_id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'group_pieces_group_id_fkey';
+						columns: ['group_id'];
+						isOneToOne: false;
+						referencedRelation: 'groups';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'group_pieces_piece_id_fkey';
+						columns: ['piece_id'];
+						isOneToOne: false;
+						referencedRelation: 'pieces';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			groups: {
+				Row: {
+					id: number;
+					name: string;
+				};
+				Insert: {
+					id?: number;
+					name: string;
+				};
+				Update: {
+					id?: number;
+					name?: string;
+				};
+				Relationships: [];
+			};
+			instrument_concert_groups: {
+				Row: {
+					group_id: number;
+					id: number;
+					instrument_id: number;
+					user_id: string;
+				};
+				Insert: {
+					group_id: number;
+					id?: number;
+					instrument_id: number;
+					user_id: string;
+				};
+				Update: {
+					group_id?: number;
+					id?: number;
+					instrument_id?: number;
+					user_id?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'instrument_concert_groups_group_id_fkey';
+						columns: ['group_id'];
+						isOneToOne: false;
+						referencedRelation: 'groups';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'instrument_concert_groups_instrument_id_fkey';
+						columns: ['instrument_id'];
+						isOneToOne: false;
+						referencedRelation: 'instruments';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			instruments: {
+				Row: {
+					id: number;
+					name: string;
+				};
+				Insert: {
+					id?: number;
+					name: string;
+				};
+				Update: {
+					id?: number;
+					name?: string;
+				};
+				Relationships: [];
+			};
+			pieces: {
+				Row: {
+					id: number;
+					name: string;
+				};
+				Insert: {
+					id?: number;
+					name: string;
+				};
+				Update: {
+					id?: number;
+					name?: string;
+				};
+				Relationships: [];
+			};
+			user_roles: {
+				Row: {
+					id: number;
+					role: Database['public']['Enums']['Role'];
+					user_id: string;
+				};
+				Insert: {
+					id?: number;
+					role: Database['public']['Enums']['Role'];
+					user_id: string;
+				};
+				Update: {
+					id?: number;
+					role?: Database['public']['Enums']['Role'];
+					user_id?: string;
+				};
+				Relationships: [];
+			};
+			user_settings: {
+				Row: {
+					id: number;
+					key: string;
+					private: boolean;
+					readonly: boolean;
+					user_id: string;
+					value: string | null;
+				};
+				Insert: {
+					id?: number;
+					key: string;
+					private?: boolean;
+					readonly?: boolean;
+					user_id?: string;
+					value?: string | null;
+				};
+				Update: {
+					id?: number;
+					key?: string;
+					private?: boolean;
+					readonly?: boolean;
+					user_id?: string;
+					value?: string | null;
+				};
+				Relationships: [];
+			};
+		};
+		Views: {
+			[_ in never]: never;
+		};
+		Functions: {
+			[_ in never]: never;
+		};
+		Enums: {
+			Role: 'admin';
+		};
+		CompositeTypes: {
+			[_ in never]: never;
+		};
+	};
+};
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 

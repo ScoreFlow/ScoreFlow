@@ -43,8 +43,8 @@ export const navData: {
 			icon: SettingsIcon,
 			items: [
 				{
-					title: 'Orkesten',
-					url: '/admin/settings/orchestras'
+					title: 'Groepen',
+					url: '/admin/settings/groups'
 				},
 				{
 					title: 'Instrumenten',
