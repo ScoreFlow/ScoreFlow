@@ -1,0 +1,45 @@
+name: Database Types Check
+
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  check-database-types:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org/
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase
+        run: supabase start
+
+      - name: Generate database types
+        run: supabase gen types typescript --local > database.types.ts.generated
+
+      - name: Compare generated types with committed version
+        run: |
+          if ! diff -q database.types.ts.generated src/lib/types/database.types.ts > /dev/null 2>&1; then
+            echo "❌ Generated database types differ from committed version!"
+            echo ""
+            echo "Please regenerate the database types by running:"
+            echo "  supabase gen types typescript --local > src/lib/types/database.types.ts"
+            echo ""
+            echo "Differences found:"
+            diff database.types.ts.generated src/lib/types/database.types.ts || true
+            exit 1
+          else
+            echo "✅ Database types are up to date!"
+          fi
