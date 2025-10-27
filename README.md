@@ -24,3 +24,17 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+## Database Type Generation
+
+When making changes to the database schema (via Supabase migrations), you need to regenerate the TypeScript types:
+
+```bash
+# Start Supabase locally
+supabase start
+
+# Generate the types
+supabase gen types typescript --local > src/lib/types/database.types.ts
+```
+
+The CI will automatically check that the generated types match the committed version.
