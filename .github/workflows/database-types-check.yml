@@ -12,36 +12,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
       - name: Install Supabase CLI
         uses: supabase/setup-cli@v1
         with:
           version: latest
 
-      - name: Start Supabase
-        run: supabase start
+      - name: Initialize Supabase
+        run: supabase init
 
-      - name: Generate database types
-        run: supabase gen types typescript --local > generated-database.types.ts
+      - name: Start Supabase database
+        run: supabase db start
 
-      - name: Compare types
+      - name: Verify generated types match Postgres schema
         run: |
-          if ! diff -q generated-database.types.ts src/lib/types/database.types.ts > /dev/null; then
+          supabase gen types typescript --local > src/lib/types/database.types.ts
+          if ! git diff --ignore-space-at-eol --exit-code --quiet src/lib/types/database.types.ts; then
             echo "❌ Database types are out of sync!"
             echo ""
-            echo "The generated types differ from src/lib/types/database.types.ts"
+            echo "The generated types differ from the committed src/lib/types/database.types.ts"
             echo ""
             echo "To fix this, run the following commands locally:"
-            echo "  supabase start"
+            echo "  supabase db start"
             echo "  supabase gen types typescript --local > src/lib/types/database.types.ts"
             echo ""
-            echo "Differences:"
-            diff -u generated-database.types.ts src/lib/types/database.types.ts || true
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff src/lib/types/database.types.ts
             exit 1
-          else
-            echo "✅ Database types are in sync!"
           fi
+          echo "✅ Database types are in sync!"
