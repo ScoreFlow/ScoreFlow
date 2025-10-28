@@ -2,6 +2,21 @@
 
 This repository uses a custom GitHub Actions workflow to deploy to Vercel, replacing the Vercel GitHub App integration.
 
+## 🚀 Quick Setup (Action Required)
+
+To enable the new deployment workflow, you need to configure three secrets in the repository:
+
+1. **Go to Repository Settings**:
+   - Navigate to: `Settings` → `Secrets and variables` → `Actions`
+   - Click "New repository secret"
+
+2. **Add the following secrets**:
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_PROJECT_ID`
+
+See the sections below for how to obtain these values.
+
 ## Required Secrets
 
 The following secrets need to be configured in the repository settings (Settings → Secrets and variables → Actions):
