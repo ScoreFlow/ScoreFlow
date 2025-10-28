@@ -24,3 +24,7 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+## Deployment
+
+This project uses a custom GitHub Actions workflow for deployment to Vercel. See [`.github/DEPLOYMENT.md`](.github/DEPLOYMENT.md) for setup instructions and required secrets.
