@@ -47,7 +47,9 @@ The following secrets need to be configured in the repository settings (Settings
 The workflow (`.github/workflows/vercel-deploy.yml`) automatically:
 - Deploys preview environments for all pull requests
 - Deploys to production when changes are pushed to the `main` branch
-- Comments on pull requests with the preview deployment URL
+- Creates GitHub Deployments with proper status reporting
+- Shows deployment status in the GitHub UI (Deployments tab)
+- Provides deployment URLs and logs through GitHub's Deployment API
 - Provides reliable deployment status for PR checks
 
 ## Migration from Vercel GitHub App
