@@ -62,7 +62,7 @@
 	<div class="flex justify-end">
 		<InviteButton />
 	</div>
-	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4">
+	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0">
 		<Table>
 			<TableHeader class="bg-muted sticky top-0 z-10">
 				{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
