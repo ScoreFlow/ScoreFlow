@@ -1,6 +1,10 @@
 name: Check Database Types
 
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - 'src/lib/types/database.types.ts'
+      - 'supabase/**'
 
 permissions:
   contents: read
