@@ -6,6 +6,17 @@
 	import { type UserData } from '$lib/types/users.types';
 	import InviteButton from './invite-button.svelte';
 	import { getRoleDisplayName } from '$lib/utils/auth';
+	import { Button } from '$lib/components/ui/button';
+	import {
+		DropdownMenu,
+		DropdownMenuTrigger,
+		DropdownMenuContent,
+		DropdownMenuItem,
+		DropdownMenuSeparator
+	} from '$lib/components/ui/dropdown-menu';
+	import EllipsisIcon from '@lucide/svelte/icons/ellipsis';
+	import ManageRolesDialog from './manage-roles-dialog.svelte';
+	import DeleteUserDialog from './delete-user-dialog.svelte';
 
 	const columns: ColumnDef<UserData>[] = [
 		{
@@ -20,10 +31,25 @@
 			accessorKey: 'roles',
 			header: 'Rol',
 			cell: ({ row }) => renderSnippet(Roles, { row: row.original })
+		},
+		{
+			id: 'actions',
+			cell: ({ row }) => {
+				return renderSnippet(Actions, { row: row.original });
+			}
 		}
 	];
 
 	let { data }: { data: UserData[] } = $props();
+
+	let manageRolesDialog = $state({
+		open: false,
+		user: null as UserData | null
+	});
+	let deleteUserDialog = $state({
+		open: false,
+		user: null as UserData | null
+	});
 
 	const table = createSvelteTable({
 		data,
@@ -32,16 +58,15 @@
 	});
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 max-w-2xl">
 	<div class="flex justify-end">
 		<InviteButton />
 	</div>
-	<div class="rounded-md border">
+	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4">
 		<Table>
 			<TableHeader class="bg-muted sticky top-0 z-10">
 				{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
 					<TableRow>
-						<TableHead class="w-8"></TableHead>
 						{#each headerGroup.headers as header (header.id)}
 							<TableHead colspan={header.colSpan}>
 								{#if !header.isPlaceholder}
@@ -58,7 +83,6 @@
 			<TableBody>
 				{#each table.getRowModel().rows as row (row.id)}
 					<TableRow data-state={row.getIsSelected() && "selected"}>
-						<TableCell />
 						{#each row.getVisibleCells() as cell (cell.id)}
 							<TableCell>
 								<FlexRender
@@ -74,6 +98,9 @@
 	</div>
 </div>
 
+<ManageRolesDialog bind:open={manageRolesDialog.open} user={manageRolesDialog.user} />
+<DeleteUserDialog bind:open={deleteUserDialog.open} user={deleteUserDialog.user} />
+
 {#snippet Roles({ row }: {row: UserData})}
 	{#if row.roles.length === 0}
 		<span class="text-muted-foreground">-</span>
@@ -84,4 +111,26 @@
 			</Badge>
 		{/each}
 	{/if}
+{/snippet}
+
+{#snippet Actions({ row }: {row: UserData})}
+	<DropdownMenu>
+		<DropdownMenuTrigger>
+			{#snippet child({ props })}
+				<Button {...props} variant="ghost" size="icon" class="relative size-8 p-0">
+					<span class="sr-only">Open menu</span>
+					<EllipsisIcon />
+				</Button>
+			{/snippet}
+		</DropdownMenuTrigger>
+		<DropdownMenuContent>
+			<DropdownMenuItem onclick={() => manageRolesDialog = {open: true, user: row}}>
+				Rollen beheren
+			</DropdownMenuItem>
+			<DropdownMenuSeparator />
+			<DropdownMenuItem variant="destructive" onclick={() => deleteUserDialog = {open: true, user: row}}>
+				Verwijderen
+			</DropdownMenuItem>
+		</DropdownMenuContent>
+	</DropdownMenu>
 {/snippet}

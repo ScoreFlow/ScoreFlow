@@ -1,8 +1,13 @@
-import { getRoles, requireRole } from '$lib/server/utils/auth';
+import { requireRole } from '$lib/server/utils/auth';
 import { form, getRequestEvent, query } from '$app/server';
 import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
 import { Constants } from '$lib/types/database.types';
-import { inviteUserSchema } from '$lib/schemas/remote/admin/users';
+import {
+	deleteUserSchema,
+	getUserRolesSchema,
+	inviteUserSchema,
+	updateUserRolesSchema
+} from '$lib/schemas/remote/admin/users';
 import type { UserData } from '$lib/types/users.types';
 
 export const getUsers = query(async (): Promise<UserData[]> => {
@@ -26,7 +31,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
 	return await Promise.all(
 		rawUsers.map(async (user) => {
-			const roles = await getRoles(user);
+			const { roles } = await getUserRoles({ id: user.id });
 			return {
 				...user,
 				roles
@@ -62,6 +67,88 @@ export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid
 		} else {
 			invalid('Het is niet gelukt om de gebruiker uit te nodigen. Probeer het later opnieuw.');
 		}
+		return;
+	}
+
+	return { success: true };
+});
+
+export const deleteUser = form(deleteUserSchema, async ({ id }, invalid) => {
+	const {
+		locals: { getSession }
+	} = getRequestEvent();
+
+	const session = await getSession();
+
+	await requireRole(session?.user, Constants.public.Enums.Role[0]);
+
+	const supabaseAdmin = getSupabaseServerAdmin();
+
+	const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
+
+	if (error) {
+		invalid('Het is niet gelukt om de gebruiker te verwijderen. Probeer het later opnieuw.');
+	}
+
+	return { success: true };
+});
+
+export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
+	const {
+		locals: { getSession }
+	} = getRequestEvent();
+
+	const session = await getSession();
+
+	await requireRole(session?.user, Constants.public.Enums.Role[0]);
+
+	const supabaseAdmin = getSupabaseServerAdmin();
+
+	const { data: roles, error } = await supabaseAdmin
+		.from('user_roles')
+		.select('role')
+		.eq('user_id', id);
+
+	if (error) {
+		throw error;
+	}
+
+	return { roles: roles.map((v) => v.role) };
+});
+
+export const updateUserRoles = form(updateUserRolesSchema, async ({ id, roles }, invalid) => {
+	const {
+		locals: { getSession }
+	} = getRequestEvent();
+
+	const session = await getSession();
+
+	await requireRole(session?.user, Constants.public.Enums.Role[0]);
+
+	const supabaseAdmin = getSupabaseServerAdmin();
+
+	const currentRolesSet = new Set((await getUserRoles({ id })).roles);
+	const newRolesSet = new Set(roles);
+
+	const rolesToDelete = currentRolesSet.difference(newRolesSet);
+	const rolesToAdd = newRolesSet.difference(currentRolesSet);
+
+	const updates = await Promise.all([
+		...Array.from(rolesToAdd).map((role) =>
+			supabaseAdmin.from('user_roles').insert({
+				user_id: id,
+				role
+			})
+		),
+		...Array.from(rolesToDelete).map((role) =>
+			supabaseAdmin.from('user_roles').delete().eq('user_id', id).eq('role', role)
+		)
+	]);
+
+	const errors = updates.filter((update) => update.error).map((update) => update.error);
+
+	if (errors.length > 0) {
+		invalid('Het is niet gelukt om de rollen aan te passen. Probeer het later opnieuw.');
 		return;
 	}
 
