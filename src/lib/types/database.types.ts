@@ -36,19 +36,19 @@ export type Database = {
     Tables: {
       concert_groups: {
         Row: {
-          concert_id: number
-          group_id: number
-          id: number
+          concert_id: string
+          group_id: string
+          id: string
         }
         Insert: {
-          concert_id: number
-          group_id: number
-          id?: number
+          concert_id: string
+          group_id: string
+          id?: string
         }
         Update: {
-          concert_id?: number
-          group_id?: number
-          id?: number
+          concert_id?: string
+          group_id?: string
+          id?: string
         }
         Relationships: [
           {
@@ -69,19 +69,19 @@ export type Database = {
       }
       concert_pieces: {
         Row: {
-          concert_id: number
-          id: number
-          piece_id: number
+          concert_id: string
+          id: string
+          piece_id: string
         }
         Insert: {
-          concert_id: number
-          id?: number
-          piece_id: number
+          concert_id: string
+          id?: string
+          piece_id: string
         }
         Update: {
-          concert_id?: number
-          id?: number
-          piece_id?: number
+          concert_id?: string
+          id?: string
+          piece_id?: string
         }
         Relationships: [
           {
@@ -103,36 +103,36 @@ export type Database = {
       concerts: {
         Row: {
           active: boolean
-          id: number
+          id: string
           name: string
         }
         Insert: {
           active?: boolean
-          id?: number
+          id?: string
           name: string
         }
         Update: {
           active?: boolean
-          id?: number
+          id?: string
           name?: string
         }
         Relationships: []
       }
       file_instruments: {
         Row: {
-          file_id: number
-          id: number
-          instrument_id: number
+          file_id: string
+          id: string
+          instrument_id: string
         }
         Insert: {
-          file_id: number
-          id?: number
-          instrument_id: number
+          file_id: string
+          id?: string
+          instrument_id: string
         }
         Update: {
-          file_id?: number
-          id?: number
-          instrument_id?: number
+          file_id?: string
+          id?: string
+          instrument_id?: string
         }
         Relationships: [
           {
@@ -154,20 +154,20 @@ export type Database = {
       files: {
         Row: {
           file_path: string
-          id: number
-          piece_id: number
+          id: string
+          piece_id: string
           version: number
         }
         Insert: {
           file_path: string
-          id?: number
-          piece_id: number
+          id?: string
+          piece_id: string
           version?: number
         }
         Update: {
           file_path?: string
-          id?: number
-          piece_id?: number
+          id?: string
+          piece_id?: string
           version?: number
         }
         Relationships: [
@@ -182,19 +182,19 @@ export type Database = {
       }
       global_settings: {
         Row: {
-          id: number
+          id: string
           key: string
           private: boolean
           value: string | null
         }
         Insert: {
-          id?: number
+          id?: string
           key: string
           private?: boolean
           value?: string | null
         }
         Update: {
-          id?: number
+          id?: string
           key?: string
           private?: boolean
           value?: string | null
@@ -203,19 +203,19 @@ export type Database = {
       }
       group_pieces: {
         Row: {
-          group_id: number
-          id: number
-          piece_id: number
+          group_id: string
+          id: string
+          piece_id: string
         }
         Insert: {
-          group_id: number
-          id?: number
-          piece_id: number
+          group_id: string
+          id?: string
+          piece_id: string
         }
         Update: {
-          group_id?: number
-          id?: number
-          piece_id?: number
+          group_id?: string
+          id?: string
+          piece_id?: string
         }
         Relationships: [
           {
@@ -236,36 +236,36 @@ export type Database = {
       }
       groups: {
         Row: {
-          id: number
+          id: string
           name: string
         }
         Insert: {
-          id?: number
+          id?: string
           name: string
         }
         Update: {
-          id?: number
+          id?: string
           name?: string
         }
         Relationships: []
       }
       instrument_concert_groups: {
         Row: {
-          group_id: number
-          id: number
-          instrument_id: number
+          group_id: string
+          id: string
+          instrument_id: string
           user_id: string
         }
         Insert: {
-          group_id: number
-          id?: number
-          instrument_id: number
+          group_id: string
+          id?: string
+          instrument_id: string
           user_id: string
         }
         Update: {
-          group_id?: number
-          id?: number
-          instrument_id?: number
+          group_id?: string
+          id?: string
+          instrument_id?: string
           user_id?: string
         }
         Relationships: [
@@ -287,47 +287,47 @@ export type Database = {
       }
       instruments: {
         Row: {
-          id: number
+          id: string
           name: string
         }
         Insert: {
-          id?: number
+          id?: string
           name: string
         }
         Update: {
-          id?: number
+          id?: string
           name?: string
         }
         Relationships: []
       }
       pieces: {
         Row: {
-          id: number
+          id: string
           name: string
         }
         Insert: {
-          id?: number
+          id?: string
           name: string
         }
         Update: {
-          id?: number
+          id?: string
           name?: string
         }
         Relationships: []
       }
       user_roles: {
         Row: {
-          id: number
+          id: string
           role: Database["public"]["Enums"]["Role"]
           user_id: string
         }
         Insert: {
-          id?: number
+          id?: string
           role: Database["public"]["Enums"]["Role"]
           user_id: string
         }
         Update: {
-          id?: number
+          id?: string
           role?: Database["public"]["Enums"]["Role"]
           user_id?: string
         }
@@ -335,7 +335,7 @@ export type Database = {
       }
       user_settings: {
         Row: {
-          id: number
+          id: string
           key: string
           private: boolean
           readonly: boolean
@@ -343,7 +343,7 @@ export type Database = {
           value: string | null
         }
         Insert: {
-          id?: number
+          id?: string
           key: string
           private?: boolean
           readonly?: boolean
@@ -351,7 +351,7 @@ export type Database = {
           value?: string | null
         }
         Update: {
-          id?: number
+          id?: string
           key?: string
           private?: boolean
           readonly?: boolean
