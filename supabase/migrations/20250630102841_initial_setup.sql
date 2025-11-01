@@ -104,7 +104,7 @@ create table "public"."instrument_concert_groups"
     "id"            uuid                                    not null default gen_random_uuid(),
     "instrument_id" uuid                                    not null,
     "group_id" uuid not null,
-    "user_id" uuid not null default auth.uid(),
+    "user_id" uuid not null,
     constraint "instrument_group_pkey" primary key ("id"),
     constraint "instrument_concert_groups_instrument_id_fkey" foreign key ("instrument_id") references "public"."instruments" ("id") on delete cascade,
     constraint "instrument_concert_groups_group_id_fkey" foreign key ("group_id") references "public"."groups" ("id") on delete cascade,
