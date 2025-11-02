@@ -15,6 +15,18 @@ npm run dev
 npm run dev -- --open
 ```
 
+## Linting and Formatting
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting.
+
+```bash
+# Check code for errors and formatting issues
+npm run lint
+
+# Format code
+npm run format
+```
+
 ## Building
 
 To create a production version of your app:
