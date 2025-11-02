@@ -1,8 +1,8 @@
 <script lang="ts">
-	import DataTable from './data-table.svelte';
-	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { getUsers } from '$lib/remote/admin/users.remote';
-	import { Issues } from '$lib/components/issues';
+import { Issues } from '$lib/components/issues'
+import { Skeleton } from '$lib/components/ui/skeleton'
+import { getUsers } from '$lib/remote/admin/users.remote'
+import DataTable from './data-table.svelte'
 </script>
 
 <h1 class="text-2xl font-bold mb-4">Gebruikers</h1>

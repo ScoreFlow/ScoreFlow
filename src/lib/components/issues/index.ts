@@ -1,7 +1,7 @@
-import Root from './issues.svelte';
+import Root from './issues.svelte'
 
 export {
 	Root,
 	//
 	Root as Issues
-};
+}

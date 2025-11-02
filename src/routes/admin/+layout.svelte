@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { SidebarInset, SidebarProvider, SidebarTrigger } from '$lib/components/ui/sidebar';
-	import { AdminSidebar } from '$lib/components/sidebar';
-	import { Copyright } from '$lib/components/copyright';
-	import { Skeleton } from '$lib/components/ui/skeleton';
+import { Copyright } from '$lib/components/copyright'
+import { AdminSidebar } from '$lib/components/sidebar'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '$lib/components/ui/sidebar'
+import { Skeleton } from '$lib/components/ui/skeleton'
 
-	let { children } = $props();
+let { children } = $props()
 </script>
 
 {#snippet pending()}

@@ -1,21 +1,19 @@
 <script lang="ts">
-	import type { Provider } from '@supabase/supabase-js';
-	import { getProviderDisplayName } from '$lib/utils/auth';
+import type { Provider } from '@supabase/supabase-js'
+import { Issues } from '$lib/components/issues'
 
-	import { Button } from '$lib/components/ui/button';
-	import { CardContent } from '$lib/components/ui/card';
-	import { Input } from '$lib/components/ui/input';
-	import { Issues } from '$lib/components/issues';
-	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/ui/spinner';
+import { Button } from '$lib/components/ui/button'
+import { CardContent } from '$lib/components/ui/card'
+import { Input } from '$lib/components/ui/input'
+import { Label } from '$lib/components/ui/label'
+import { Spinner } from '$lib/components/ui/spinner'
+import { login, oauth } from '$lib/remote/auth.remote'
+import { loginSchema } from '$lib/schemas/remote/auth'
+import { getProviderDisplayName } from '$lib/utils/auth'
 
+const id = $props.id()
 
-	import { login, oauth } from '$lib/remote/auth.remote';
-	import { loginSchema } from '$lib/schemas/remote/auth';
-
-	const id = $props.id();
-
-	let loadingOauth: Partial<{ [key in Provider]: boolean }> = $state({});
+let loadingOauth: Partial<{ [key in Provider]: boolean }> = $state({})
 </script>
 
 {#snippet oauthForm(provider: Provider)}

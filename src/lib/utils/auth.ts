@@ -1,5 +1,5 @@
-import type { Provider } from '@supabase/supabase-js';
-import type { Enums } from '$lib/types/database.types';
+import type { Provider } from '@supabase/supabase-js'
+import type { Enums } from '$lib/types/database.types'
 
 const providers: Provider[] = [
 	'apple',
@@ -19,7 +19,7 @@ const providers: Provider[] = [
 	'twitter',
 	'workos',
 	'zoom'
-];
+]
 
 export function isValidProvider(input: string): input is Provider {
 	return providers.includes(input as Provider)
@@ -43,16 +43,16 @@ const providerDisplayNames: Partial<Record<Provider, string>> = {
 	twitter: 'Twitter',
 	workos: 'WorkOS',
 	zoom: 'Zoom'
-} as const;
+} as const
 
 export function getProviderDisplayName(provider: Provider): string | null {
-	return providerDisplayNames[provider] ?? null;
+	return providerDisplayNames[provider] ?? null
 }
 
-const roleDisplayNames: Record<Enums<"Role">, string> = {
+const roleDisplayNames: Record<Enums<'Role'>, string> = {
 	admin: 'Beheerder'
-} as const;
+} as const
 
-export function getRoleDisplayName(role: Enums<"Role">): string {
-	return roleDisplayNames[role];
+export function getRoleDisplayName(role: Enums<'Role'>): string {
+	return roleDisplayNames[role]
 }

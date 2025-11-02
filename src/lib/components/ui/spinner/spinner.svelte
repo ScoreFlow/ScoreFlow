@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { cn } from "$lib/utils/ui.js";
-	import Loader2Icon from "@lucide/svelte/icons/loader-2";
-	import type { ComponentProps } from "svelte";
+import Loader2Icon from '@lucide/svelte/icons/loader-2'
+import type { ComponentProps } from 'svelte'
+import { cn } from '$lib/utils/ui.js'
 
-	type Props = ComponentProps<typeof Loader2Icon>;
+type Props = ComponentProps<typeof Loader2Icon>
 
-	let { class: className, ...restProps }: Props = $props();
+let { class: className, ...restProps }: Props = $props()
 </script>
 
 <Loader2Icon

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { CardContent } from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
+import { Button } from '$lib/components/ui/button'
+import { CardContent } from '$lib/components/ui/card'
 </script>
 
 <CardContent class="p-6 md:p-8 flex flex-col gap-6 items-center text-center">

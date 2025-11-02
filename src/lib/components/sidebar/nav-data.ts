@@ -1,19 +1,19 @@
-import DrumIcon from '@lucide/svelte/icons/drum';
-import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard';
-import MusicIcon from '@lucide/svelte/icons/music';
-import SettingsIcon from '@lucide/svelte/icons/settings';
-import type { Component } from 'svelte';
+import DrumIcon from '@lucide/svelte/icons/drum'
+import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard'
+import MusicIcon from '@lucide/svelte/icons/music'
+import SettingsIcon from '@lucide/svelte/icons/settings'
+import type { Component } from 'svelte'
 
 export interface MenuItem {
-	title: string;
-	url: string;
-	isActive?: boolean;
-	icon?: Component;
-	items?: { title: string; url: string }[];
+	title: string
+	url: string
+	isActive?: boolean
+	icon?: Component
+	items?: { title: string; url: string }[]
 }
 
 export const navData: {
-	navAdmin: MenuItem[];
+	navAdmin: MenuItem[]
 } = {
 	navAdmin: [
 		{
@@ -57,4 +57,4 @@ export const navData: {
 			]
 		}
 	]
-};
+}

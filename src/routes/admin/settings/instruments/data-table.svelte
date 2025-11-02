@@ -1,50 +1,59 @@
 <script lang="ts">
-	import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core';
-	import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table';
-	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '$lib/components/ui/table';
-	import CreateInstrumentButton from './create-instrument-button.svelte';
-	import type { Tables } from '$lib/types/database.types';
-	import { Button } from '$lib/components/ui/button';
-	import {
-		DropdownMenu,
-		DropdownMenuTrigger,
-		DropdownMenuContent,
-		DropdownMenuItem,
-		DropdownMenuSeparator
-	} from '$lib/components/ui/dropdown-menu';
-	import EllipsisIcon from '@lucide/svelte/icons/ellipsis';
-	import EditInstrumentDialog from './edit-instrument-dialog.svelte';
-	import DeleteInstrumentDialog from './delete-instrument-dialog.svelte';
+import EllipsisIcon from '@lucide/svelte/icons/ellipsis'
+import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core'
+import { Button } from '$lib/components/ui/button'
+import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table'
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger
+} from '$lib/components/ui/dropdown-menu'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow
+} from '$lib/components/ui/table'
+import type { Tables } from '$lib/types/database.types'
+import CreateInstrumentButton from './create-instrument-button.svelte'
+import DeleteInstrumentDialog from './delete-instrument-dialog.svelte'
+import EditInstrumentDialog from './edit-instrument-dialog.svelte'
 
-	const columns: ColumnDef<Tables<'instruments'>>[] = [
-		{
-			accessorKey: 'name',
-			header: 'Instrument'
-		},
-		{
-			id: 'actions',
-			cell: ({ row }) => {
-				return renderSnippet(Actions, { row: row.original });
-			}
+const columns: ColumnDef<Tables<'instruments'>>[] = [
+	{
+		accessorKey: 'name',
+		header: 'Instrument'
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			return renderSnippet(Actions, { row: row.original })
 		}
-	];
+	}
+]
 
-	let { data }: { data: Tables<'instruments'>[] } = $props();
+let { data }: { data: Tables<'instruments'>[] } = $props()
 
-	let editInstrumentDialog = $state({
-		open: false,
-		instrument: null as Tables<'instruments'> | null
-	});
-	let deleteInstrumentDialog = $state({
-		open: false,
-		instrument: null as Tables<'instruments'> | null
-	});
+let editInstrumentDialog = $state({
+	open: false,
+	instrument: null as Tables<'instruments'> | null
+})
+let deleteInstrumentDialog = $state({
+	open: false,
+	instrument: null as Tables<'instruments'> | null
+})
 
-	let table = $derived(createSvelteTable({
+let table = $derived(
+	createSvelteTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel()
-	}));
+	})
+)
 </script>
 
 <div class="flex flex-col gap-2 max-w-sm">

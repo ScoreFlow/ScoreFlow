@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { Card, CardContent } from '$lib/components/ui/card';
-	import { Copyright } from '$lib/components/copyright/index.js';
+import { Copyright } from '$lib/components/copyright/index.js'
+import { Button } from '$lib/components/ui/button'
+import { Card, CardContent } from '$lib/components/ui/card'
 
-	let { data } = $props();
+let { data } = $props()
 </script>
 
 <div class="bg-muted min-h-svh flex flex-col items-center justify-center gap-6 p-6 md:p-10 relative">
