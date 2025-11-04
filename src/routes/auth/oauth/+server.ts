@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 	const code = url.searchParams.get('code');
 
 	if (!code) {
-		redirect(303, `/auth/error?error=no-code`);
+		 redirect(303, `/auth/error?error=no-code`);
 	}
 
 	const { error } = await locals.supabase.auth.exchangeCodeForSession(code);

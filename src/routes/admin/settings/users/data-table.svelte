@@ -1,14 +1,7 @@
 <script lang="ts">
 	import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core';
 	import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table';
-	import {
-		Table,
-		TableBody,
-		TableCell,
-		TableHead,
-		TableHeader,
-		TableRow
-	} from '$lib/components/ui/table';
+	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '$lib/components/ui/table';
 	import { Badge } from '$lib/components/ui/badge';
 	import { type UserData } from '$lib/types/users.types';
 	import InviteButton from './invite-button.svelte';
@@ -69,9 +62,7 @@
 	<div class="flex justify-end">
 		<InviteButton />
 	</div>
-	<div
-		class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0"
-	>
+	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0">
 		<Table>
 			<TableHeader class="bg-muted sticky top-0 z-10">
 				{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -91,10 +82,13 @@
 			</TableHeader>
 			<TableBody>
 				{#each table.getRowModel().rows as row (row.id)}
-					<TableRow data-state={row.getIsSelected() && 'selected'}>
+					<TableRow data-state={row.getIsSelected() && "selected"}>
 						{#each row.getVisibleCells() as cell (cell.id)}
 							<TableCell>
-								<FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
+								<FlexRender
+									content={cell.column.columnDef.cell}
+									context={cell.getContext()}
+								/>
 							</TableCell>
 						{/each}
 					</TableRow>
@@ -107,7 +101,7 @@
 <ManageRolesDialog bind:open={manageRolesDialog.open} user={manageRolesDialog.user} />
 <DeleteUserDialog bind:open={deleteUserDialog.open} user={deleteUserDialog.user} />
 
-{#snippet Roles({ row }: { row: UserData })}
+{#snippet Roles({ row }: {row: UserData})}
 	{#if row.roles.length === 0}
 		<span class="text-muted-foreground">-</span>
 	{:else}
@@ -119,7 +113,7 @@
 	{/if}
 {/snippet}
 
-{#snippet Actions({ row }: { row: UserData })}
+{#snippet Actions({ row }: {row: UserData})}
 	<DropdownMenu>
 		<DropdownMenuTrigger>
 			{#snippet child({ props })}
@@ -130,14 +124,11 @@
 			{/snippet}
 		</DropdownMenuTrigger>
 		<DropdownMenuContent>
-			<DropdownMenuItem onclick={() => (manageRolesDialog = { open: true, user: row })}>
+			<DropdownMenuItem onclick={() => manageRolesDialog = {open: true, user: row}}>
 				Rollen beheren
 			</DropdownMenuItem>
 			<DropdownMenuSeparator />
-			<DropdownMenuItem
-				variant="destructive"
-				onclick={() => (deleteUserDialog = { open: true, user: row })}
-			>
+			<DropdownMenuItem variant="destructive" onclick={() => deleteUserDialog = {open: true, user: row}}>
 				Verwijderen
 			</DropdownMenuItem>
 		</DropdownMenuContent>

@@ -18,20 +18,18 @@
 	<div class="flex flex-col gap-2 items-center text-center">
 		<h1 class="text-2xl font-bold">Wachtwoord vergeten?</h1>
 		<div class="text-muted-foreground text-balance">
-			Vul je e-mailadres in. Als dit bij ons bekend is, sturen we je een e-mail met instructies om
-			je wachtwoord te herstellen.
+			Vul je e-mailadres in. Als dit bij ons bekend is, sturen we je een e-mail met instructies om je wachtwoord te
+			herstellen.
 		</div>
 	</div>
 
-	<form {...resetPassword.preflight(resetPasswordSchema)} class="flex flex-col gap-3">
+	<form
+		{...resetPassword.preflight(resetPasswordSchema)}
+		class="flex flex-col gap-3"
+	>
 		<div class="grid gap-3">
 			<Label for="email-{id}">E-mailadres</Label>
-			<Input
-				{...resetPassword.fields.email.as('email')}
-				id="email-{id}"
-				placeholder="E-mailadres"
-				required
-			/>
+			<Input {...resetPassword.fields.email.as('email')} id="email-{id}" placeholder="E-mailadres" required />
 			<Issues issues={resetPassword.fields.allIssues()} />
 		</div>
 
@@ -39,11 +37,12 @@
 			<Alert>
 				<CheckIcon />
 				<AlertDescription>
-					Als het e-mailadres bij ons bekend is, hebben we een e-mail gestuurd met instructies om je
-					wachtwoord te herstellen.
+					Als het e-mailadres bij ons bekend is, hebben we een e-mail gestuurd met instructies om je wachtwoord te
+					herstellen.
 				</AlertDescription>
 			</Alert>
 		{/if}
+
 
 		<Button class="w-full" type="submit">
 			{#if resetPassword.pending}

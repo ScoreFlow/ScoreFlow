@@ -9,6 +9,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Spinner } from '$lib/components/ui/spinner';
 
+
 	import { login, oauth } from '$lib/remote/auth.remote';
 	import { loginSchema } from '$lib/schemas/remote/auth';
 
@@ -19,10 +20,10 @@
 
 {#snippet oauthForm(provider: Provider)}
 	{@const form = oauth.for(provider)}
-	<form {...form} onsubmit={() => (loadingOauth[provider] = true)} class="flex flex-col gap-2">
-		<input type="hidden" name="provider" value={provider} />
+	<form {...form} onsubmit={() => loadingOauth[provider] = true} class="flex flex-col gap-2">
+		<input type="hidden" name="provider" value={provider}>
 		<Button type="submit" variant="outline" class="w-full">
-			{#if loadingOauth[provider] ?? false}
+			{#if (loadingOauth[provider] ?? false)}
 				<Spinner />
 			{:else}
 				<span>
@@ -39,6 +40,7 @@
 <CardContent class="grid p-0 md:grid-cols-2 wide-content">
 	<div class="p-6 md:p-8">
 		<div class="flex flex-col gap-6">
+
 			<div class="flex flex-col items-center text-center">
 				<h1 class="text-2xl font-bold">ScoreFlow</h1>
 				<div class="text-muted-foreground text-balance">Log in om door te gaan</div>
@@ -52,10 +54,16 @@
 			<div
 				class="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t"
 			>
-				<span class="bg-card text-muted-foreground relative z-10 px-2"> of </span>
+								<span class="bg-card text-muted-foreground relative z-10 px-2">
+									of
+								</span>
 			</div>
 
-			<form {...login.preflight(loginSchema)} class="flex flex-col gap-6">
+			<form
+				{...login.preflight(loginSchema)}
+				class="flex flex-col gap-6"
+			>
+
 				<div class="grid gap-3">
 					<Label for="email-{id}">E-mailadres</Label>
 					<Input {...login.fields.email.as('email')} placeholder="E-mailadres" required />
@@ -65,9 +73,7 @@
 				<div class="grid gap-3">
 					<div class="flex items-center">
 						<Label for="password-{id}">Wachtwoord</Label>
-						<Button class="ml-auto px-0" href="/auth/password-reset" variant="link"
-							>Wachtwoord vergeten?</Button
-						>
+						<Button class="ml-auto px-0" href="/auth/password-reset" variant="link">Wachtwoord vergeten?</Button>
 					</div>
 					<Input {...login.fields.password.as('password')} placeholder="Wachtwoord" required />
 					<Issues issues={login.fields.password.issues()} />
@@ -76,16 +82,21 @@
 				<Issues issues={login.fields.issues()} />
 
 				<Button class="w-full" type="submit">
-					{#if login.pending}
+					{#if (login.pending)}
 						<Spinner />
 					{:else}
 						Inloggen
 					{/if}
 				</Button>
+
 			</form>
 		</div>
 	</div>
 	<div class="bg-muted items-center justify-center hidden md:flex">
-		<img alt="" class="inset-0 object-cover w-full m-24" src="/favicon.svg" />
+		<img
+			alt=""
+			class="inset-0 object-cover w-full m-24"
+			src="/favicon.svg"
+		/>
 	</div>
 </CardContent>

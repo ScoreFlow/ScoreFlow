@@ -20,22 +20,25 @@
 	import { Constants } from '$lib/types/database.types';
 	import { getRoleDisplayName } from '$lib/utils/auth';
 
-	let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props();
+	let { open = $bindable(false), user }: { open: boolean, user: UserData | null } = $props();
 
 	const id = $props.id();
 </script>
+
 
 <Dialog bind:open>
 	<DialogContent>
 		<form {...updateUserRoles.preflight(updateUserRolesSchema)}>
 			<input {...updateUserRoles.fields.id.as('hidden', user?.id ?? '')} />
 			<DialogHeader>
-				<DialogTitle>Rollen beheren</DialogTitle>
+				<DialogTitle>
+					Rollen beheren
+				</DialogTitle>
 				<DialogDescription>
 					Selecteer de rollen die je wilt toewijzen aan de gebruiker
 					{#if user?.user_metadata.full_name}
 						<span class="text-foreground">
-							'{user?.user_metadata.full_name}'
+						'{user?.user_metadata.full_name}'
 						</span>
 					{/if}
 				</DialogDescription>
@@ -44,11 +47,8 @@
 				<div class="flex flex-col gap-4 py-2 pl-4">
 					{#each Constants.public.Enums.Role as role}
 						<div class="flex items-start gap-2">
-							<Checkbox
-								{...{ ...updateUserRoles.fields.roles.as('checkbox', role), type: undefined }}
-								id="roles-{id}-{role}"
-								checked={user?.roles.includes(role)}
-							/>
+							<Checkbox {...{ ...updateUserRoles.fields.roles.as('checkbox', role), type: undefined }}
+												id="roles-{id}-{role}" checked={user?.roles.includes(role)} />
 							<Label class="text-right" for="roles-{id}-{role}">{getRoleDisplayName(role)}</Label>
 						</div>
 					{/each}
@@ -56,7 +56,7 @@
 
 				<Issues class="col-span-2" issues={updateUserRoles.fields.allIssues()} />
 
-				{#if updateUserRoles.result?.success}
+				{#if (updateUserRoles.result?.success)}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
 						<AlertDescription>De rollen zijn aangepast</AlertDescription>

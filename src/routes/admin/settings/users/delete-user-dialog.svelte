@@ -17,7 +17,7 @@
 	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
 	import { Spinner } from '$lib/components/ui/spinner';
 
-	let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props();
+	let { open = $bindable(false), user }: { open: boolean, user: UserData | null } = $props();
 </script>
 
 <Dialog bind:open>
@@ -25,12 +25,14 @@
 		<form {...deleteUser.preflight(deleteUserSchema)}>
 			<input {...deleteUser.fields.id.as('hidden', user?.id ?? '')} />
 			<DialogHeader>
-				<DialogTitle>Gebruiker verwijderen</DialogTitle>
+				<DialogTitle>
+					Gebruiker verwijderen
+				</DialogTitle>
 				<DialogDescription>
 					Weet je zeker dat je de gebruiker
 					{#if user?.user_metadata.full_name}
 						<span class="text-foreground">
-							'{user?.user_metadata.full_name}'
+						'{user?.user_metadata.full_name}'
 						</span>
 					{/if}
 					wilt verwijderen?
@@ -39,7 +41,7 @@
 			<div class="flex flex-col gap-4 py-2">
 				<Issues class="col-span-2" issues={deleteUser.fields.allIssues()} />
 
-				{#if deleteUser.result?.success}
+				{#if (deleteUser.result?.success)}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
 						<AlertDescription>De gebruiker is verwijderd</AlertDescription>

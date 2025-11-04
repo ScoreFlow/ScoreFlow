@@ -24,14 +24,10 @@
 		<Skeleton class="h-8" />
 	</div>
 {:then data}
+
 	<DataTable {data} />
+
 {:catch _error}
 	<Issues
-		issues={[
-			{
-				message:
-					'Er is een fout opgetreden bij het laden van de instrumenten. Probeer het later opnieuw.'
-			}
-		]}
-	/>
+		issues={[{message: 'Er is een fout opgetreden bij het laden van de instrumenten. Probeer het later opnieuw.'}]} />
 {/await}

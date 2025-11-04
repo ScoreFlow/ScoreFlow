@@ -22,7 +22,7 @@ const providers: Provider[] = [
 ];
 
 export function isValidProvider(input: string): input is Provider {
-	return providers.includes(input as Provider);
+	return providers.includes(input as Provider)
 }
 
 const providerDisplayNames: Partial<Record<Provider, string>> = {
@@ -49,10 +49,10 @@ export function getProviderDisplayName(provider: Provider): string | null {
 	return providerDisplayNames[provider] ?? null;
 }
 
-const roleDisplayNames: Record<Enums<'Role'>, string> = {
+const roleDisplayNames: Record<Enums<"Role">, string> = {
 	admin: 'Beheerder'
 } as const;
 
-export function getRoleDisplayName(role: Enums<'Role'>): string {
+export function getRoleDisplayName(role: Enums<"Role">): string {
 	return roleDisplayNames[role];
 }
