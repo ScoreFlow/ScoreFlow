@@ -7,9 +7,7 @@
 	<h1 class="text-2xl font-bold">Toegang alleen op uitnodiging</h1>
 
 	<div>
-		<p>
-			Het account waarmee u probeert in te loggen bestaat niet of is niet geactiveerd.
-		</p>
+		<p>Het account waarmee u probeert in te loggen bestaat niet of is niet geactiveerd.</p>
 		<p>Neem contact op met de systeembeheerder om een uitnodiging te ontvangen.</p>
 	</div>
 

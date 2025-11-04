@@ -12,7 +12,7 @@
 		SidebarMenuSubItem
 	} from '$lib/components/ui/sidebar';
 
-	let { items, title }: { items: MenuItem[], title: string } = $props();
+	let { items, title }: { items: MenuItem[]; title: string } = $props();
 </script>
 
 <SidebarContent>

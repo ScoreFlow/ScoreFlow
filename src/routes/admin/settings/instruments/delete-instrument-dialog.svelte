@@ -17,7 +17,10 @@
 	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
 	import { Spinner } from '$lib/components/ui/spinner';
 
-	let { open = $bindable(false), instrument }: { open: boolean, instrument: Tables<'instruments'> | null } = $props();
+	let {
+		open = $bindable(false),
+		instrument
+	}: { open: boolean; instrument: Tables<'instruments'> | null } = $props();
 </script>
 
 <Dialog bind:open>
@@ -25,21 +28,19 @@
 		<form {...deleteInstrument.preflight(deleteInstrumentSchema)}>
 			<input {...deleteInstrument.fields.id.as('hidden', instrument?.id ?? '')} />
 			<DialogHeader>
-				<DialogTitle>
-					Instrument verwijderen
-				</DialogTitle>
+				<DialogTitle>Instrument verwijderen</DialogTitle>
 				<DialogDescription>
 					Weet je zeker dat je het instrument
 					<span class="text-foreground">
 						'{instrument?.name}'
-						</span>
+					</span>
 					wilt verwijderen?
 				</DialogDescription>
 			</DialogHeader>
 			<div class="flex flex-col gap-4 py-2">
 				<Issues class="col-span-2" issues={deleteInstrument.fields.allIssues()} />
 
-				{#if (deleteInstrument.result?.success)}
+				{#if deleteInstrument.result?.success}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
 						<AlertDescription>Het instrument is verwijderd</AlertDescription>
@@ -65,4 +66,3 @@
 		</form>
 	</DialogContent>
 </Dialog>
-

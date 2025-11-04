@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core';
 	import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table';
-	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '$lib/components/ui/table';
+	import {
+		Table,
+		TableBody,
+		TableCell,
+		TableHead,
+		TableHeader,
+		TableRow
+	} from '$lib/components/ui/table';
 	import CreateInstrumentButton from './create-instrument-button.svelte';
 	import type { Tables } from '$lib/types/database.types';
 	import { Button } from '$lib/components/ui/button';
@@ -40,18 +47,22 @@
 		instrument: null as Tables<'instruments'> | null
 	});
 
-	let table = $derived(createSvelteTable({
-		data,
-		columns,
-		getCoreRowModel: getCoreRowModel()
-	}));
+	let table = $derived(
+		createSvelteTable({
+			data,
+			columns,
+			getCoreRowModel: getCoreRowModel()
+		})
+	);
 </script>
 
 <div class="flex flex-col gap-2 max-w-sm">
 	<div class="flex justify-end">
 		<CreateInstrumentButton />
 	</div>
-	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0">
+	<div
+		class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0"
+	>
 		<Table>
 			<TableHeader class="bg-muted sticky top-0 z-10">
 				{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -71,13 +82,10 @@
 			</TableHeader>
 			<TableBody>
 				{#each table.getRowModel().rows as row (row.id)}
-					<TableRow data-state={row.getIsSelected() && "selected"}>
+					<TableRow data-state={row.getIsSelected() && 'selected'}>
 						{#each row.getVisibleCells() as cell (cell.id)}
 							<TableCell>
-								<FlexRender
-									content={cell.column.columnDef.cell}
-									context={cell.getContext()}
-								/>
+								<FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
 							</TableCell>
 						{/each}
 					</TableRow>
@@ -87,10 +95,16 @@
 	</div>
 </div>
 
-<EditInstrumentDialog bind:open={editInstrumentDialog.open} instrument={editInstrumentDialog.instrument} />
-<DeleteInstrumentDialog bind:open={deleteInstrumentDialog.open} instrument={deleteInstrumentDialog.instrument} />
+<EditInstrumentDialog
+	bind:open={editInstrumentDialog.open}
+	instrument={editInstrumentDialog.instrument}
+/>
+<DeleteInstrumentDialog
+	bind:open={deleteInstrumentDialog.open}
+	instrument={deleteInstrumentDialog.instrument}
+/>
 
-{#snippet Actions({ row }: {row: Tables<'instruments'>})}
+{#snippet Actions({ row }: { row: Tables<'instruments'> })}
 	<DropdownMenu>
 		<DropdownMenuTrigger>
 			{#snippet child({ props })}
@@ -101,11 +115,14 @@
 			{/snippet}
 		</DropdownMenuTrigger>
 		<DropdownMenuContent>
-			<DropdownMenuItem onclick={() => editInstrumentDialog = {open: true, instrument: row}}>
+			<DropdownMenuItem onclick={() => (editInstrumentDialog = { open: true, instrument: row })}>
 				Bewerken
 			</DropdownMenuItem>
 			<DropdownMenuSeparator />
-			<DropdownMenuItem variant="destructive" onclick={() => deleteInstrumentDialog = {open: true, instrument: row}}>
+			<DropdownMenuItem
+				variant="destructive"
+				onclick={() => (deleteInstrumentDialog = { open: true, instrument: row })}
+			>
 				Verwijderen
 			</DropdownMenuItem>
 		</DropdownMenuContent>

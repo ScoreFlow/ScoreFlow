@@ -13,13 +13,13 @@
 			if (newSession?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
-		})
+		});
 
 		return () => data.subscription.unsubscribe();
-	})
+	});
 </script>
 
-<ModeWatcher/>
+<ModeWatcher />
 
 <svelte:boundary>
 	<main class="overflow-y-auto h-full">
@@ -28,7 +28,7 @@
 
 	{#snippet pending()}
 		<div class="h-screen flex items-center justify-center">
-			<Spinner class="size-8"/>
+			<Spinner class="size-8" />
 		</div>
 	{/snippet}
 </svelte:boundary>

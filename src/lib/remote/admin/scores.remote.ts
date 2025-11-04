@@ -91,4 +91,3 @@ export const deleteInstrument = form(deleteInstrumentSchema, async ({ id }, inva
 
 	return { success: true };
 });
-

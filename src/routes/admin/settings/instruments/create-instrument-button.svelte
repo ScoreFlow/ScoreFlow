@@ -21,18 +21,15 @@
 	const id = $props.id();
 </script>
 
-
 <Dialog>
-	<DialogTrigger class={buttonVariants({variant: 'outline', size: 'sm'})}>
+	<DialogTrigger class={buttonVariants({ variant: 'outline', size: 'sm' })}>
 		<PlusIcon />
 		<span class="hidden lg:inline">Instrument toevoegen</span>
 	</DialogTrigger>
 	<DialogContent>
 		<form {...createInstrument.preflight(createInstrumentSchema)}>
 			<DialogHeader>
-				<DialogTitle>
-					Instrument toevoegen
-				</DialogTitle>
+				<DialogTitle>Instrument toevoegen</DialogTitle>
 			</DialogHeader>
 			<div class="grid grid-cols-[auto_1fr] gap-4 py-4">
 				<Label class="text-right" for="name-{id}">Naam</Label>
@@ -40,7 +37,7 @@
 
 				<Issues class="col-span-2" issues={createInstrument.fields.allIssues()} />
 
-				{#if (createInstrument.result?.success)}
+				{#if createInstrument.result?.success}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
 						<AlertDescription>Het instrument is toegevoegd</AlertDescription>

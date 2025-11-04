@@ -22,18 +22,15 @@
 	const id = $props.id();
 </script>
 
-
 <Dialog>
-	<DialogTrigger class={buttonVariants({variant: 'outline', size: 'sm'})}>
+	<DialogTrigger class={buttonVariants({ variant: 'outline', size: 'sm' })}>
 		<PlusIcon />
 		<span class="hidden lg:inline">Gebruiker toevoegen</span>
 	</DialogTrigger>
 	<DialogContent>
 		<form {...inviteUser.preflight(inviteUserSchema)}>
 			<DialogHeader>
-				<DialogTitle>
-					Gebruiker toevoegen
-				</DialogTitle>
+				<DialogTitle>Gebruiker toevoegen</DialogTitle>
 				<DialogDescription>
 					Vul naam en e-mailadres in om een gebruiker toe te voegen.
 				</DialogDescription>
@@ -47,7 +44,7 @@
 
 				<Issues class="col-span-2" issues={inviteUser.fields.allIssues()} />
 
-				{#if (inviteUser.result?.success)}
+				{#if inviteUser.result?.success}
 					<Alert class="col-span-2">
 						<CircleCheckIcon />
 						<AlertDescription>Er is een e-mail met een uitnodiging verstuurd</AlertDescription>

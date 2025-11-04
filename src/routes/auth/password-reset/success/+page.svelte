@@ -7,9 +7,7 @@
 	<h1 class="text-2xl font-bold">Je nieuwe wachtwoord is ingesteld</h1>
 
 	<div>
-		<p>
-			Je wachtwoord is succesvol gewijzigd. Je kunt nu inloggen met je nieuwe wachtwoord.
-		</p>
+		<p>Je wachtwoord is succesvol gewijzigd. Je kunt nu inloggen met je nieuwe wachtwoord.</p>
 	</div>
 
 	<Button href="/auth/login">Inloggen</Button>

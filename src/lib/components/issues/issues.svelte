@@ -12,7 +12,7 @@
 </script>
 
 {#if (issues ?? []).length > 0}
-	<div class={cn("flex flex-col gap-2", className)} {...restProps}>
+	<div class={cn('flex flex-col gap-2', className)} {...restProps}>
 		{#each issues ?? [] as issue}
 			<Alert variant="destructive">
 				<AlertCircleIcon />

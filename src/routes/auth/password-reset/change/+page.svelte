@@ -20,14 +20,15 @@
 		</div>
 	</div>
 
-	<form
-		{...changePassword.preflight(changePasswordSchema)}
-		class="flex flex-col gap-6"
-	>
+	<form {...changePassword.preflight(changePasswordSchema)} class="flex flex-col gap-6">
 		<div class="grid gap-3">
 			<Label for="password-{id}">Nieuw wachtwoord</Label>
-			<Input {...changePassword.fields.password.as('password')} id="password-{id}" placeholder="Nieuw wachtwoord"
-						 required />
+			<Input
+				{...changePassword.fields.password.as('password')}
+				id="password-{id}"
+				placeholder="Nieuw wachtwoord"
+				required
+			/>
 		</div>
 
 		<Issues issues={changePassword.fields.allIssues()} />
