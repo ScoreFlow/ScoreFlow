@@ -38,17 +38,17 @@ export type Database = {
         Row: {
           concert_id: string
           group_id: string
-          id: string
+          id: number
         }
         Insert: {
           concert_id: string
           group_id: string
-          id?: string
+          id?: number
         }
         Update: {
           concert_id?: string
           group_id?: string
-          id?: string
+          id?: number
         }
         Relationships: [
           {
@@ -70,17 +70,17 @@ export type Database = {
       concert_pieces: {
         Row: {
           concert_id: string
-          id: string
+          id: number
           piece_id: string
         }
         Insert: {
           concert_id: string
-          id?: string
+          id?: number
           piece_id: string
         }
         Update: {
           concert_id?: string
-          id?: string
+          id?: number
           piece_id?: string
         }
         Relationships: [
@@ -121,17 +121,17 @@ export type Database = {
       file_instruments: {
         Row: {
           file_id: string
-          id: string
+          id: number
           instrument_id: string
         }
         Insert: {
           file_id: string
-          id?: string
+          id?: number
           instrument_id: string
         }
         Update: {
           file_id?: string
-          id?: string
+          id?: number
           instrument_id?: string
         }
         Relationships: [
@@ -182,39 +182,75 @@ export type Database = {
       }
       global_settings: {
         Row: {
-          id: string
+          id: number
           key: string
           private: boolean
           value: string | null
         }
         Insert: {
-          id?: string
+          id?: number
           key: string
           private?: boolean
           value?: string | null
         }
         Update: {
-          id?: string
+          id?: number
           key?: string
           private?: boolean
           value?: string | null
         }
         Relationships: []
       }
+      group_instrument_users: {
+        Row: {
+          group_id: string
+          id: number
+          instrument_id: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: number
+          instrument_id: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: number
+          instrument_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_instrument_users_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_instrument_users_instrument_id_fkey"
+            columns: ["instrument_id"]
+            isOneToOne: false
+            referencedRelation: "instruments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       group_pieces: {
         Row: {
           group_id: string
-          id: string
+          id: number
           piece_id: string
         }
         Insert: {
           group_id: string
-          id?: string
+          id?: number
           piece_id: string
         }
         Update: {
           group_id?: string
-          id?: string
+          id?: number
           piece_id?: string
         }
         Relationships: [
@@ -248,42 +284,6 @@ export type Database = {
           name?: string
         }
         Relationships: []
-      }
-      instrument_concert_groups: {
-        Row: {
-          group_id: string
-          id: string
-          instrument_id: string
-          user_id: string
-        }
-        Insert: {
-          group_id: string
-          id?: string
-          instrument_id: string
-          user_id: string
-        }
-        Update: {
-          group_id?: string
-          id?: string
-          instrument_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "instrument_concert_groups_group_id_fkey"
-            columns: ["group_id"]
-            isOneToOne: false
-            referencedRelation: "groups"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "instrument_concert_groups_instrument_id_fkey"
-            columns: ["instrument_id"]
-            isOneToOne: false
-            referencedRelation: "instruments"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       instruments: {
         Row: {
@@ -335,7 +335,7 @@ export type Database = {
       }
       user_settings: {
         Row: {
-          id: string
+          id: number
           key: string
           private: boolean
           readonly: boolean
@@ -343,7 +343,7 @@ export type Database = {
           value: string | null
         }
         Insert: {
-          id?: string
+          id?: number
           key: string
           private?: boolean
           readonly?: boolean
@@ -351,7 +351,7 @@ export type Database = {
           value?: string | null
         }
         Update: {
-          id?: string
+          id?: number
           key?: string
           private?: boolean
           readonly?: boolean
