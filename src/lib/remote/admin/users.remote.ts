@@ -9,6 +9,7 @@ import {
 	updateUserRolesSchema
 } from '$lib/schemas/remote/admin/users';
 import type { UserData } from '$lib/types/users.types';
+import { updateHelper } from '$lib/utils/db';
 
 export const getUsers = query(async (): Promise<UserData[]> => {
 	const {
@@ -31,7 +32,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
 	return await Promise.all(
 		rawUsers.map(async (user) => {
-			const { roles } = await getUserRoles({ id: user.id });
+			const roles = await getUserRoles({ id: user.id });
 			return {
 				...user,
 				roles
@@ -113,7 +114,7 @@ export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
 		throw error;
 	}
 
-	return { roles: roles.map((v) => v.role) };
+	return roles.map((v) => v.role);
 });
 
 export const updateUserRoles = form(updateUserRolesSchema, async ({ id, roles }, invalid) => {
@@ -127,23 +128,17 @@ export const updateUserRoles = form(updateUserRolesSchema, async ({ id, roles },
 
 	const supabaseAdmin = getSupabaseServerAdmin();
 
-	const currentRolesSet = new Set((await getUserRoles({ id })).roles);
-	const newRolesSet = new Set(roles);
-
-	const rolesToDelete = currentRolesSet.difference(newRolesSet);
-	const rolesToAdd = newRolesSet.difference(currentRolesSet);
-
-	const updates = await Promise.all([
-		...Array.from(rolesToAdd).map((role) =>
-			supabaseAdmin.from('user_roles').insert({
+	const updates = await updateHelper(
+		await getUserRoles({ id }),
+		roles ?? [],
+		async (role) =>
+			await supabaseAdmin.from('user_roles').delete().eq('user_id', id).eq('role', role),
+		async (role) =>
+			await supabaseAdmin.from('user_roles').insert({
 				user_id: id,
 				role
 			})
-		),
-		...Array.from(rolesToDelete).map((role) =>
-			supabaseAdmin.from('user_roles').delete().eq('user_id', id).eq('role', role)
-		)
-	]);
+	);
 
 	const errors = updates.filter((update) => update.error).map((update) => update.error);
 
