@@ -99,16 +99,16 @@ create table "public"."file_instruments"
     constraint "file_instruments_file_id_fkey" foreign key ("file_id") references "public"."files" ("id") on delete cascade
 );
 
-create table "public"."instrument_concert_groups"
+create table "public"."user_group_instruments"
 (
     "id"            uuid                                    not null default gen_random_uuid(),
     "instrument_id" uuid                                    not null,
     "group_id" uuid not null,
     "user_id" uuid not null,
-    constraint "instrument_group_pkey" primary key ("id"),
-    constraint "instrument_concert_groups_instrument_id_fkey" foreign key ("instrument_id") references "public"."instruments" ("id") on delete cascade,
-    constraint "instrument_concert_groups_group_id_fkey" foreign key ("group_id") references "public"."groups" ("id") on delete cascade,
-    constraint "instrument_concert_groups_user_id_fkey" foreign key ("user_id") references "auth"."users" ("id") on delete cascade
+    constraint "user_group_instruments_pkey" primary key ("id"),
+    constraint "user_group_instruments_instrument_id_fkey" foreign key ("instrument_id") references "public"."instruments" ("id") on delete cascade,
+    constraint "user_group_instruments_group_id_fkey" foreign key ("group_id") references "public"."groups" ("id") on delete cascade,
+    constraint "user_group_instruments_user_id_fkey" foreign key ("user_id") references "auth"."users" ("id") on delete cascade
 );
 
 alter table "public"."concerts" enable row level security;
@@ -120,7 +120,7 @@ alter table "public"."concert_pieces" enable row level security;
 alter table "public"."group_pieces" enable row level security;
 alter table "public"."files" enable row level security;
 alter table "public"."file_instruments" enable row level security;
-alter table "public"."instrument_concert_groups" enable row level security;
+alter table "public"."user_group_instruments" enable row level security;
 alter table "public"."global_settings" enable row level security;
 alter table "public"."user_settings" enable row level security;
 
@@ -142,14 +142,14 @@ select using (true);
 create
 policy "Give access if user has access to instrument" on "public"."instruments"
     for
-select using (id in (select instrument_id from public.instrument_concert_groups));
+select using (id in (select instrument_id from public.user_group_instruments));
 
 create
 policy "Give access if user has access to instrument" on "public"."file_instruments"
     for
 select using (instrument_id in (
-    select instrument_concert_groups.instrument_id
-    from public.instrument_concert_groups
+    select user_group_instruments.instrument_id
+    from public.user_group_instruments
     ));
 
 create
@@ -165,7 +165,7 @@ policy "Give access if user has access to group" on "public"."groups"
     for
 select using (id in (
     select group_id
-    from public.instrument_concert_groups
+    from public.user_group_instruments
     ));
 
 create
@@ -185,7 +185,7 @@ select using (group_id in (
     ));
 
 create
-policy "Give users access to their own data only" on "public"."instrument_concert_groups"
+policy "Give users access to their own data only" on "public"."user_group_instruments"
     for
 select using ((select auth.uid()) = user_id);
 

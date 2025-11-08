@@ -43,14 +43,14 @@ export const deleteGroup = form(deleteGroupSchema, async ({ id }, invalid) => {
 
 	await getGroups().refresh();
 
-	return { success: true }
+	return { success: true };
 });
 
 export const getGroupMembers = query(getGroupMembersSchema, async ({ id }) => {
 	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 	const { data, error } = await supabaseAdmin
-		.from('instrument_concert_groups')
+		.from('user_group_instruments')
 		.select('user_id')
 		.eq('group_id', id);
 
@@ -65,7 +65,7 @@ export const getGroupMemberInstruments = query(
 		const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 		const { data, error } = await supabaseAdmin
-			.from('instrument_concert_groups')
+			.from('user_group_instruments')
 			.select('instrument_id')
 			.eq('group_id', group_id)
 			.eq('user_id', user_id);
@@ -86,13 +86,13 @@ export const updateGroupMemberInstruments = form(
 			instruments ?? [],
 			async (instrument_id) =>
 				await supabaseAdmin
-					.from('instrument_concert_groups')
+					.from('user_group_instruments')
 					.delete()
 					.eq('group_id', group_id)
 					.eq('user_id', user_id)
 					.eq('instrument_id', instrument_id),
 			async (instrument_id) =>
-				await supabaseAdmin.from('instrument_concert_groups').insert({
+				await supabaseAdmin.from('user_group_instruments').insert({
 					group_id,
 					user_id,
 					instrument_id
