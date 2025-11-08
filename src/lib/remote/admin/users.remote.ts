@@ -1,7 +1,5 @@
-import { requireRole } from '$lib/server/utils/auth';
 import { form, getRequestEvent, query } from '$app/server';
-import { getSupabaseServerAdmin } from '$lib/server/utils/supabase';
-import { Constants } from '$lib/types/database.types';
+import { safeGetSupabaseServerAdmin } from '$lib/server/utils/supabase';
 import {
 	deleteUserSchema,
 	getUserRolesSchema,
@@ -12,15 +10,8 @@ import type { UserData } from '$lib/types/users.types';
 import { updateHelper } from '$lib/utils/db';
 
 export const getUsers = query(async (): Promise<UserData[]> => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent();
+	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
-	const session = await getSession();
-
-	await requireRole(session?.user, Constants.public.Enums.Role[0]);
-
-	const supabaseAdmin = getSupabaseServerAdmin();
 	const {
 		data: { users: rawUsers },
 		error
@@ -43,15 +34,10 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
 export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid) => {
 	const {
-		locals: { getSession },
 		url: { origin }
 	} = getRequestEvent();
 
-	const session = await getSession();
-
-	await requireRole(session?.user, Constants.public.Enums.Role[0]);
-
-	const supabaseAdmin = getSupabaseServerAdmin();
+	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 	const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
 		data: { full_name: name },
@@ -75,15 +61,7 @@ export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid
 });
 
 export const deleteUser = form(deleteUserSchema, async ({ id }, invalid) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent();
-
-	const session = await getSession();
-
-	await requireRole(session?.user, Constants.public.Enums.Role[0]);
-
-	const supabaseAdmin = getSupabaseServerAdmin();
+	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 	const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
 
@@ -95,15 +73,7 @@ export const deleteUser = form(deleteUserSchema, async ({ id }, invalid) => {
 });
 
 export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent();
-
-	const session = await getSession();
-
-	await requireRole(session?.user, Constants.public.Enums.Role[0]);
-
-	const supabaseAdmin = getSupabaseServerAdmin();
+	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 	const { data: roles, error } = await supabaseAdmin
 		.from('user_roles')
@@ -118,15 +88,7 @@ export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
 });
 
 export const updateUserRoles = form(updateUserRolesSchema, async ({ id, roles }, invalid) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent();
-
-	const session = await getSession();
-
-	await requireRole(session?.user, Constants.public.Enums.Role[0]);
-
-	const supabaseAdmin = getSupabaseServerAdmin();
+	const supabaseAdmin = await safeGetSupabaseServerAdmin();
 
 	const updates = await updateHelper(
 		await getUserRoles({ id }),
