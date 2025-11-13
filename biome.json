@@ -44,6 +44,9 @@
     "formatter": {
       "indentScriptAndStyle": true,
       "enabled": true
+    },
+    "parser": {
+      "interpolation": true
     }
   },
   "json": {

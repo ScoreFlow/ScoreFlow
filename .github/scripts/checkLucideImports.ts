@@ -1,6 +1,6 @@
-import { opendir, readFile } from "fs/promises"
-import { join, resolve } from "path"
-import { exit } from "process"
+import { opendir, readFile } from "node:fs/promises"
+import { join, resolve } from "node:path"
+import { exit } from "node:process"
 
 const IMPROPER_IMPORT_REGEX = /import\s+(?!type).*\s+from\s+['"]@lucide\/svelte['"]\s*;?/g
 const TYPE_IMPORT_REGEX = /import\s+type.*\s+from\s+['"]@lucide\/svelte['"]\s*;?/g
