@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from '$lib/components/ui/empty';
+  import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "$lib/components/ui/empty"
   import { Skeleton } from "$lib/components/ui/skeleton"
   import { getGroups } from "$lib/remote/admin/groups.remote"
-	import CreateGroupButton from './create-group-button.svelte';
+  import CreateGroupButton from "./create-group-button.svelte"
   import GroupCard from "./group-card.svelte"
 </script>
 
