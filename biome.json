@@ -8,7 +8,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/flex-render.svelte", "!**/*.css"]
+    "includes": ["**", "!**/flex-render.svelte", "!**/*.css", "!src/lib/types/database.types.ts"]
   },
   "formatter": {
     "enabled": true,
