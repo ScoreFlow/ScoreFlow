@@ -99,6 +99,12 @@ const table = createSvelteTable({
 							</TableCell>
 						{/each}
 					</TableRow>
+				{:else}
+					<TableRow>
+						<TableCell colspan={columns.length} class="h-24 text-center">
+							Geen resultaten.
+						</TableCell>
+					</TableRow>
 				{/each}
 			</TableBody>
 		</Table>
