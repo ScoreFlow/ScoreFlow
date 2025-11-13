@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { getGroups } from '$lib/remote/admin/groups.remote';
-	import GroupCard from './group-card.svelte';
+  import { Skeleton } from "$lib/components/ui/skeleton"
+  import { getGroups } from "$lib/remote/admin/groups.remote"
+  import GroupCard from "./group-card.svelte"
 </script>
 
 <h1 class="text-2xl font-bold mb-8">Groepen</h1>

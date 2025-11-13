@@ -1,13 +1,13 @@
 <script lang="ts">
-	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
-	import UsersIcon from '@lucide/svelte/icons/users';
-	import { Card, CardContent, CardDescription, CardTitle } from '$lib/components/ui/card';
-	import { getGroupMembers } from '$lib/remote/admin/groups.remote';
-	import type { Tables } from '$lib/types/database.types';
+  import ChevronRightIcon from "@lucide/svelte/icons/chevron-right"
+  import UsersIcon from "@lucide/svelte/icons/users"
+  import { Card, CardContent, CardDescription, CardTitle } from "$lib/components/ui/card"
+  import { getGroupMembers } from "$lib/remote/admin/groups.remote"
+  import type { Tables } from "$lib/types/database.types"
 
-	const { group }: { group: Tables<'groups'> } = $props();
+  const { group }: { group: Tables<"groups"> } = $props()
 
-	let members = await getGroupMembers({ id: group.id });
+  let members = await getGroupMembers({ id: group.id })
 </script>
 
 
