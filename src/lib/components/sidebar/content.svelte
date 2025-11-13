@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { type MenuItem } from './';
-	import {
-		SidebarContent,
-		SidebarGroup,
-		SidebarGroupLabel,
-		SidebarMenu,
-		SidebarMenuButton,
-		SidebarMenuItem,
-		SidebarMenuSub,
-		SidebarMenuSubButton,
-		SidebarMenuSubItem
-	} from '$lib/components/ui/sidebar';
+  import {
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem
+  } from "$lib/components/ui/sidebar"
+  import { type MenuItem } from "./"
 
-	let { items, title }: { items: MenuItem[], title: string } = $props();
+  let { items, title }: { items: MenuItem[]; title: string } = $props()
 </script>
 
 <SidebarContent>

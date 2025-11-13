@@ -12,14 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 22
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org/
-
-      - name: Install ts-node
-        run: npm install ts-node
+          bun-version: latest
 
       - name: Run check imports script
-        run: npx ts-node --project .github/scripts/tsconfig.json .github/scripts/checkLucideImports.ts
+        run: bun run .github/scripts/checkLucideImports.ts

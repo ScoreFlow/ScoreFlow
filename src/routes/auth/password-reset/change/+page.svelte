@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { CardContent } from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/ui/spinner';
+  import { Issues } from "$lib/components/issues"
+  import { Button } from "$lib/components/ui/button"
+  import { CardContent } from "$lib/components/ui/card"
+  import { Input } from "$lib/components/ui/input"
+  import { Label } from "$lib/components/ui/label"
+  import { Spinner } from "$lib/components/ui/spinner"
+  import { changePassword } from "$lib/remote/auth.remote"
+  import { changePasswordSchema } from "$lib/schemas/remote/auth"
 
-	import { changePassword } from '$lib/remote/auth.remote';
-	import { Issues } from '$lib/components/issues';
-	import { changePasswordSchema } from '$lib/schemas/remote/auth';
-
-	const id = $props.id();
+  const id = $props.id()
 </script>
 
 <CardContent class="p-6 md:p-8 max-w-md mx-auto flex flex-col gap-6">

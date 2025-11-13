@@ -1,25 +1,25 @@
 <script lang="ts">
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { inviteUser } from '$lib/remote/admin/users.remote';
-	import { Input } from '$lib/components/ui/input';
-	import {
-		Dialog,
-		DialogContent,
-		DialogDescription,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle,
-		DialogTrigger
-	} from '$lib/components/ui/dialog';
-	import CircleCheckIcon from '@lucide/svelte/icons/circle-check';
-	import PlusIcon from '@lucide/svelte/icons/plus';
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/ui/spinner';
-	import { Issues } from '$lib/components/issues';
-	import { inviteUserSchema } from '$lib/schemas/remote/admin/users';
+  import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
+  import PlusIcon from "@lucide/svelte/icons/plus"
+  import { Issues } from "$lib/components/issues"
+  import { Alert, AlertDescription } from "$lib/components/ui/alert"
+  import { Button, buttonVariants } from "$lib/components/ui/button"
+  import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+  } from "$lib/components/ui/dialog"
+  import { Input } from "$lib/components/ui/input"
+  import { Label } from "$lib/components/ui/label"
+  import { Spinner } from "$lib/components/ui/spinner"
+  import { inviteUser } from "$lib/remote/admin/users.remote"
+  import { inviteUserSchema } from "$lib/schemas/remote/admin/users"
 
-	const id = $props.id();
+  const id = $props.id()
 </script>
 
 

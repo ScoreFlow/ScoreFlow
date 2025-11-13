@@ -9,10 +9,22 @@ A music score manager and distributor for orchestras.
 Start a development server:
 
 ```bash
-npm run dev
+bun run dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+bun run dev -- --open
+```
+
+## Linting and Formatting
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting.
+
+```bash
+# Check code for errors and formatting issues
+npm run lint
+
+# Format code
+npm run format
 ```
 
 ## Building
@@ -20,7 +32,7 @@ npm run dev -- --open
 To create a production version of your app:
 
 ```bash
-npm run build
+bun run build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with `bun run preview`.
