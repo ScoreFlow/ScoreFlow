@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
-	import { cn } from '$lib/utils/ui';
-	import type { HTMLAttributes } from 'svelte/elements';
+  import AlertCircleIcon from "@lucide/svelte/icons/alert-circle"
+  import type { HTMLAttributes } from "svelte/elements"
+  import { Alert, AlertDescription } from "$lib/components/ui/alert"
+  import { cn } from "$lib/utils/ui"
 
-	type Props = {
-		issues?: { message: string }[] | undefined;
-	} & HTMLAttributes<HTMLDivElement>;
+  type Props = {
+    issues?: { message: string }[] | undefined
+  } & HTMLAttributes<HTMLDivElement>
 
-	let { class: className, issues, ...restProps }: Props = $props();
+  let { class: className, issues, ...restProps }: Props = $props()
 </script>
 
 {#if (issues ?? []).length > 0}

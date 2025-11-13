@@ -1,21 +1,21 @@
 <script lang="ts">
-	import {
-		Sidebar,
-		SidebarHeader,
-		SidebarMenu,
-		SidebarMenuButton,
-		SidebarMenuItem,
-		useSidebar
-	} from '$lib/components/ui/sidebar';
-	import Content from './content.svelte';
-	import { navData } from './index';
-	import { beforeNavigate } from '$app/navigation';
+  import { beforeNavigate } from "$app/navigation"
+  import {
+    Sidebar,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    useSidebar
+  } from "$lib/components/ui/sidebar"
+  import Content from "./content.svelte"
+  import { navData } from "./index"
 
-	const sidebar = useSidebar();
+  const sidebar = useSidebar()
 
-	beforeNavigate(() => {
-		sidebar.setOpenMobile(false);
-	});
+  beforeNavigate(() => {
+    sidebar.setOpenMobile(false)
+  })
 </script>
 
 

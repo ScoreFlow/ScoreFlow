@@ -1,1 +1,1 @@
-export { default as Copyright } from './copyright.svelte';
+export { default as Copyright } from "./copyright.svelte"
