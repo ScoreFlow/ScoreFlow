@@ -4,7 +4,9 @@ import {
   deleteGroupSchema,
   getGroupMemberInstrumentsSchema,
   getGroupMembersSchema,
-  updateGroupMemberInstrumentsSchema
+  getGroupSchema,
+  updateGroupMemberInstrumentsSchema,
+  updateGroupSchema
 } from "$lib/schemas/remote/admin/groups"
 import { safeGetSupabaseServerAdmin } from "$lib/server/utils/supabase"
 import { updateHelper } from "$lib/utils/db"
@@ -13,6 +15,16 @@ export const getGroups = query(async () => {
   const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
   const { data, error } = await supabaseAdmin.from("groups").select("*")
+
+  if (error) throw error
+
+  return data
+})
+
+export const getGroup = query(getGroupSchema, async ({ id }) => {
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
+
+  const { data, error } = await supabaseAdmin.from("groups").select("*").eq("id", id).single()
 
   if (error) throw error
 
@@ -68,6 +80,19 @@ export const getGroupMemberInstruments = query(getGroupMemberInstrumentsSchema, 
   if (error) throw error
 
   return data.map(row => row.instrument_id)
+})
+
+export const updateGroup = form(updateGroupSchema, async ({ id, name }) => {
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
+
+  const { error } = await supabaseAdmin.from("groups").update({ name }).eq("id", id)
+
+  if (error) throw error
+
+  getGroup({ id }).set({ id, name })
+  await getGroups().refresh()
+
+  return { success: true }
 })
 
 export const updateGroupMemberInstruments = form(
