@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Tables } from '$lib/types/database.types';
-	import { Card, CardTitle, CardContent, CardDescription } from '$lib/components/ui/card';
-	import { getGroupMembers } from '$lib/remote/admin/groups.remote';
-	import UsersIcon from '@lucide/svelte/icons/users';
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
+	import UsersIcon from '@lucide/svelte/icons/users';
+	import { Card, CardContent, CardDescription, CardTitle } from '$lib/components/ui/card';
+	import { getGroupMembers } from '$lib/remote/admin/groups.remote';
+	import type { Tables } from '$lib/types/database.types';
 
 	const { group }: { group: Tables<'groups'> } = $props();
 
