@@ -1,26 +1,23 @@
 <script lang="ts">
-import CircleCheckIcon from '@lucide/svelte/icons/circle-check'
-import { Issues } from '$lib/components/issues'
-import { Alert, AlertDescription } from '$lib/components/ui/alert'
-import { Button } from '$lib/components/ui/button'
-import {
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle
-} from '$lib/components/ui/dialog'
-import { Spinner } from '$lib/components/ui/spinner'
-import { deleteInstrument } from '$lib/remote/admin/scores.remote'
-import { deleteInstrumentSchema } from '$lib/schemas/remote/admin/scores'
-import type { Tables } from '$lib/types/database.types'
+  import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
+  import { Issues } from "$lib/components/issues"
+  import { Alert, AlertDescription } from "$lib/components/ui/alert"
+  import { Button } from "$lib/components/ui/button"
+  import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+  } from "$lib/components/ui/dialog"
+  import { Spinner } from "$lib/components/ui/spinner"
+  import { deleteInstrument } from "$lib/remote/admin/scores.remote"
+  import { deleteInstrumentSchema } from "$lib/schemas/remote/admin/scores"
+  import type { Tables } from "$lib/types/database.types"
 
-let {
-	open = $bindable(false),
-	instrument
-}: { open: boolean; instrument: Tables<'instruments'> | null } = $props()
+  let { open = $bindable(false), instrument }: { open: boolean; instrument: Tables<"instruments"> | null } = $props()
 </script>
 
 <Dialog bind:open>

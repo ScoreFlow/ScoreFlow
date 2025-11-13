@@ -1,23 +1,23 @@
 <script lang="ts">
-import CircleCheckIcon from '@lucide/svelte/icons/circle-check'
-import { Issues } from '$lib/components/issues'
-import { Alert, AlertDescription } from '$lib/components/ui/alert'
-import { Button } from '$lib/components/ui/button'
-import {
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle
-} from '$lib/components/ui/dialog'
-import { Spinner } from '$lib/components/ui/spinner'
-import { deleteUser } from '$lib/remote/admin/users.remote'
-import { deleteUserSchema } from '$lib/schemas/remote/admin/users'
-import type { UserData } from '$lib/types/users.types'
+  import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
+  import { Issues } from "$lib/components/issues"
+  import { Alert, AlertDescription } from "$lib/components/ui/alert"
+  import { Button } from "$lib/components/ui/button"
+  import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+  } from "$lib/components/ui/dialog"
+  import { Spinner } from "$lib/components/ui/spinner"
+  import { deleteUser } from "$lib/remote/admin/users.remote"
+  import { deleteUserSchema } from "$lib/schemas/remote/admin/users"
+  import type { UserData } from "$lib/types/users.types"
 
-let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props()
+  let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props()
 </script>
 
 <Dialog bind:open>

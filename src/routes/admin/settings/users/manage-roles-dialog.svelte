@@ -1,28 +1,28 @@
 <script lang="ts">
-import CircleCheckIcon from '@lucide/svelte/icons/circle-check'
-import { Issues } from '$lib/components/issues'
-import { Alert, AlertDescription } from '$lib/components/ui/alert'
-import { Button } from '$lib/components/ui/button'
-import { Checkbox } from '$lib/components/ui/checkbox'
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle
-} from '$lib/components/ui/dialog'
-import { Label } from '$lib/components/ui/label'
-import { Spinner } from '$lib/components/ui/spinner'
-import { updateUserRoles } from '$lib/remote/admin/users.remote'
-import { updateUserRolesSchema } from '$lib/schemas/remote/admin/users'
-import { Constants } from '$lib/types/database.types'
-import type { UserData } from '$lib/types/users.types'
-import { getRoleDisplayName } from '$lib/utils/auth'
+  import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
+  import { Issues } from "$lib/components/issues"
+  import { Alert, AlertDescription } from "$lib/components/ui/alert"
+  import { Button } from "$lib/components/ui/button"
+  import { Checkbox } from "$lib/components/ui/checkbox"
+  import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+  } from "$lib/components/ui/dialog"
+  import { Label } from "$lib/components/ui/label"
+  import { Spinner } from "$lib/components/ui/spinner"
+  import { updateUserRoles } from "$lib/remote/admin/users.remote"
+  import { updateUserRolesSchema } from "$lib/schemas/remote/admin/users"
+  import { Constants } from "$lib/types/database.types"
+  import type { UserData } from "$lib/types/users.types"
+  import { getRoleDisplayName } from "$lib/utils/auth"
 
-let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props()
+  let { open = $bindable(false), user }: { open: boolean; user: UserData | null } = $props()
 
-const id = $props.id()
+  const id = $props.id()
 </script>
 
 

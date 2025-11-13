@@ -1,68 +1,61 @@
 <script lang="ts">
-import EllipsisIcon from '@lucide/svelte/icons/ellipsis'
-import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core'
-import { Badge } from '$lib/components/ui/badge'
-import { Button } from '$lib/components/ui/button'
-import { createSvelteTable, FlexRender, renderSnippet } from '$lib/components/ui/data-table'
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger
-} from '$lib/components/ui/dropdown-menu'
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow
-} from '$lib/components/ui/table'
-import { type UserData } from '$lib/types/users.types'
-import { getRoleDisplayName } from '$lib/utils/auth'
-import DeleteUserDialog from './delete-user-dialog.svelte'
-import InviteButton from './invite-button.svelte'
-import ManageRolesDialog from './manage-roles-dialog.svelte'
+  import EllipsisIcon from "@lucide/svelte/icons/ellipsis"
+  import { type ColumnDef, getCoreRowModel } from "@tanstack/table-core"
+  import { Badge } from "$lib/components/ui/badge"
+  import { Button } from "$lib/components/ui/button"
+  import { createSvelteTable, FlexRender, renderSnippet } from "$lib/components/ui/data-table"
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+  } from "$lib/components/ui/dropdown-menu"
+  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table"
+  import { type UserData } from "$lib/types/users.types"
+  import { getRoleDisplayName } from "$lib/utils/auth"
+  import DeleteUserDialog from "./delete-user-dialog.svelte"
+  import InviteButton from "./invite-button.svelte"
+  import ManageRolesDialog from "./manage-roles-dialog.svelte"
 
-const columns: ColumnDef<UserData>[] = [
-	{
-		accessorKey: 'email',
-		header: 'E-mailadres'
-	},
-	{
-		accessorKey: 'user_metadata.full_name',
-		header: 'Naam'
-	},
-	{
-		accessorKey: 'roles',
-		header: 'Rol',
-		cell: ({ row }) => renderSnippet(Roles, { row: row.original })
-	},
-	{
-		id: 'actions',
-		cell: ({ row }) => {
-			return renderSnippet(Actions, { row: row.original })
-		}
-	}
-]
+  const columns: ColumnDef<UserData>[] = [
+    {
+      accessorKey: "email",
+      header: "E-mailadres"
+    },
+    {
+      accessorKey: "user_metadata.full_name",
+      header: "Naam"
+    },
+    {
+      accessorKey: "roles",
+      header: "Rol",
+      cell: ({ row }) => renderSnippet(Roles, { row: row.original })
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        return renderSnippet(Actions, { row: row.original })
+      }
+    }
+  ]
 
-let { data }: { data: UserData[] } = $props()
+  let { data }: { data: UserData[] } = $props()
 
-let manageRolesDialog = $state({
-	open: false,
-	user: null as UserData | null
-})
-let deleteUserDialog = $state({
-	open: false,
-	user: null as UserData | null
-})
+  let manageRolesDialog = $state({
+    open: false,
+    user: null as UserData | null
+  })
+  let deleteUserDialog = $state({
+    open: false,
+    user: null as UserData | null
+  })
 
-const table = createSvelteTable({
-	data,
-	columns,
-	getCoreRowModel: getCoreRowModel()
-})
+  const table = createSvelteTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel()
+  })
 </script>
 
 <div class="flex flex-col gap-2 max-w-2xl">

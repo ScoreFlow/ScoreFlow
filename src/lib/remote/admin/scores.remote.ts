@@ -1,93 +1,93 @@
-import { form, getRequestEvent, query } from '$app/server'
+import { form, getRequestEvent, query } from "$app/server"
 import {
-	createInstrumentSchema,
-	deleteInstrumentSchema,
-	updateInstrumentSchema
-} from '$lib/schemas/remote/admin/scores'
-import { requireRole } from '$lib/server/utils/auth'
-import { getSupabaseServerAdmin } from '$lib/server/utils/supabase'
-import { Constants } from '$lib/types/database.types'
+  createInstrumentSchema,
+  deleteInstrumentSchema,
+  updateInstrumentSchema
+} from "$lib/schemas/remote/admin/scores"
+import { requireRole } from "$lib/server/utils/auth"
+import { getSupabaseServerAdmin } from "$lib/server/utils/supabase"
+import { Constants } from "$lib/types/database.types"
 
 export const getInstruments = query(async () => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent()
+  const {
+    locals: { getSession }
+  } = getRequestEvent()
 
-	const session = await getSession()
+  const session = await getSession()
 
-	await requireRole(session?.user, Constants.public.Enums.Role[0])
+  await requireRole(session?.user, Constants.public.Enums.Role[0])
 
-	const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = getSupabaseServerAdmin()
 
-	const { data, error } = await supabaseAdmin.from('instruments').select('*')
+  const { data, error } = await supabaseAdmin.from("instruments").select("*")
 
-	if (error) throw error
+  if (error) throw error
 
-	return data
+  return data
 })
 
-export const createInstrument = form(createInstrumentSchema, async (data) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent()
+export const createInstrument = form(createInstrumentSchema, async data => {
+  const {
+    locals: { getSession }
+  } = getRequestEvent()
 
-	const session = await getSession()
+  const session = await getSession()
 
-	await requireRole(session?.user, Constants.public.Enums.Role[0])
+  await requireRole(session?.user, Constants.public.Enums.Role[0])
 
-	const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = getSupabaseServerAdmin()
 
-	const { error } = await supabaseAdmin.from('instruments').insert(data)
+  const { error } = await supabaseAdmin.from("instruments").insert(data)
 
-	if (error) throw error
+  if (error) throw error
 
-	await getInstruments().refresh()
+  await getInstruments().refresh()
 
-	return { success: true }
+  return { success: true }
 })
 
 export const updateInstrument = form(updateInstrumentSchema, async ({ id, name }, invalid) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent()
+  const {
+    locals: { getSession }
+  } = getRequestEvent()
 
-	const session = await getSession()
+  const session = await getSession()
 
-	await requireRole(session?.user, Constants.public.Enums.Role[0])
+  await requireRole(session?.user, Constants.public.Enums.Role[0])
 
-	const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = getSupabaseServerAdmin()
 
-	const { error } = await supabaseAdmin.from('instruments').update({ name }).eq('id', id)
+  const { error } = await supabaseAdmin.from("instruments").update({ name }).eq("id", id)
 
-	if (error) {
-		invalid('Het is niet gelukt om het instrument aan te passen. Probeer het later opnieuw.')
-		return
-	}
+  if (error) {
+    invalid("Het is niet gelukt om het instrument aan te passen. Probeer het later opnieuw.")
+    return
+  }
 
-	await getInstruments().refresh()
+  await getInstruments().refresh()
 
-	return { success: true }
+  return { success: true }
 })
 
 export const deleteInstrument = form(deleteInstrumentSchema, async ({ id }, invalid) => {
-	const {
-		locals: { getSession }
-	} = getRequestEvent()
+  const {
+    locals: { getSession }
+  } = getRequestEvent()
 
-	const session = await getSession()
+  const session = await getSession()
 
-	await requireRole(session?.user, Constants.public.Enums.Role[0])
+  await requireRole(session?.user, Constants.public.Enums.Role[0])
 
-	const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = getSupabaseServerAdmin()
 
-	const { error } = await supabaseAdmin.from('instruments').delete().eq('id', id)
+  const { error } = await supabaseAdmin.from("instruments").delete().eq("id", id)
 
-	if (error) {
-		invalid('Het is niet gelukt om het instrument te verwijderen. Probeer het later opnieuw.')
-		return
-	}
+  if (error) {
+    invalid("Het is niet gelukt om het instrument te verwijderen. Probeer het later opnieuw.")
+    return
+  }
 
-	await getInstruments().refresh()
+  await getInstruments().refresh()
 
-	return { success: true }
+  return { success: true }
 })

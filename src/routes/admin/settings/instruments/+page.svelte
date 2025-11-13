@@ -1,8 +1,8 @@
 <script lang="ts">
-import { Issues } from '$lib/components/issues'
-import { Skeleton } from '$lib/components/ui/skeleton'
-import { getInstruments } from '$lib/remote/admin/scores.remote'
-import DataTable from './data-table.svelte'
+  import { Issues } from "$lib/components/issues"
+  import { Skeleton } from "$lib/components/ui/skeleton"
+  import { getInstruments } from "$lib/remote/admin/scores.remote"
+  import DataTable from "./data-table.svelte"
 </script>
 
 <h1 class="text-2xl font-bold mb-4">Instrumenten</h1>

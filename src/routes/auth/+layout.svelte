@@ -1,8 +1,8 @@
 <script>
-import { Copyright } from '$lib/components/copyright'
-import { Card } from '$lib/components/ui/card'
+  import { Copyright } from "$lib/components/copyright"
+  import { Card } from "$lib/components/ui/card"
 
-let { children } = $props()
+  let { children } = $props()
 </script>
 
 <div class="bg-muted min-h-svh flex flex-col items-center justify-center gap-6 p-6 md:p-10 relative">
