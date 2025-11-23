@@ -8,8 +8,9 @@
   import { Label } from "$lib/components/ui/label"
   import { Skeleton } from "$lib/components/ui/skeleton"
   import { Spinner } from "$lib/components/ui/spinner"
-  import { getGroup, updateGroup } from "$lib/remote/admin/groups.remote"
+  import { getGroup, getGroupMembers, updateGroup } from "$lib/remote/admin/groups.remote"
   import { updateGroupSchema } from "$lib/schemas/remote/admin/groups"
+  import DataTable from "./data-table.svelte"
   import DeleteGroupButton from "./delete-group-button.svelte"
 
   let id = $derived(page.params.id ?? "")
@@ -21,16 +22,20 @@
   $effect(() => {
     name = group.name
   })
+
+  let data = $derived(await getGroupMembers({ id }))
 </script>
 
 <h1 class="text-2xl font-bold mb-4">Groep beheren</h1>
 
 <svelte:boundary>
-	<div class="flex flex-col gap-4 max-w-md">
-		<form {...form.preflight(updateGroupSchema)} class="contents" method="post">
+	<div class="flex flex-col gap-8 max-w-lg">
+		<form {...form.preflight(updateGroupSchema)} class="flex flex-col gap-2" method="post">
 			<input {...form.fields.id.as('hidden', group.id ?? '')} />
 
-			<div class="grid gap-3">
+			<h2 class="text-xl font-bold">Instellingen</h2>
+
+			<div class="grid gap-3 max-w-xs">
 				<Label for="name-{id}">Naam</Label>
 				<Input
 					{...form.fields.name.as('text')}
@@ -59,9 +64,15 @@
 				{/if}
 			</div>
 		</form>
+
+		<div>
+			<h2 class="text-xl font-bold mb-2">Leden</h2>
+			<DataTable {data}/>
+		</div>
+
 		<Card class="text-destructive border-destructive">
 			<CardContent class="flex flex-col items-start gap-4">
-				<CardTitle>Gevarenzone</CardTitle>
+				<CardTitle class="text-xl">Gevarenzone</CardTitle>
 				<DeleteGroupButton {group} />
 			</CardContent>
 		</Card>

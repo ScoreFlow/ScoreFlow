@@ -61,11 +61,22 @@ export const deleteGroup = form(deleteGroupSchema, async ({ id }, invalid) => {
 export const getGroupMembers = query(getGroupMembersSchema, async ({ id }) => {
   const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
-  const { data, error } = await supabaseAdmin.from("user_group_instruments").select("user_id").eq("group_id", id)
+  const { data, error } = await supabaseAdmin.from("user_group_instruments").select("*").eq("group_id", id)
 
   if (error) throw error
 
-  return Array.from(new Set(data.map(row => row.user_id)))
+  const groupedData = data.reduce(
+    (acc, { user_id, instrument_id }) => {
+      if (!acc[user_id]) {
+        acc[user_id] = { user_id, instrument_ids: [] }
+      }
+      acc[user_id].instrument_ids.push(instrument_id)
+      return acc
+    },
+    {} as Record<string, { user_id: string; instrument_ids: string[] }>
+  )
+
+  return Object.values(groupedData)
 })
 
 export const getGroupMemberInstruments = query(getGroupMemberInstrumentsSchema, async ({ group_id, user_id }) => {
@@ -125,7 +136,8 @@ export const updateGroupMemberInstruments = form(
       return
     }
 
-    await getGroupMemberInstruments({ group_id, user_id }).refresh()
+    getGroupMemberInstruments({ group_id, user_id }).set(instruments ?? [])
+    await getGroupMembers({ id: group_id }).refresh()
 
     return { success: true }
   }
