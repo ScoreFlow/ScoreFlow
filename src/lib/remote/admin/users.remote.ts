@@ -1,3 +1,4 @@
+import * as z from "zod"
 import { form, getRequestEvent, query } from "$app/server"
 import {
   deleteUserSchema,
@@ -30,6 +31,21 @@ export const getUsers = query(async (): Promise<UserData[]> => {
       } as UserData
     })
   )
+})
+
+export const getUser = query(z.uuid(), async id => {
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
+
+  const {
+    data: { user },
+    error
+  } = await supabaseAdmin.auth.admin.getUserById(id)
+
+  if (error) {
+    throw error
+  }
+
+  return user
 })
 
 export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid) => {

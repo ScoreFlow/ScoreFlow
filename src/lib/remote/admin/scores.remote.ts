@@ -1,3 +1,4 @@
+import * as z from "zod"
 import { form, query } from "$app/server"
 import {
   createInstrumentSchema,
@@ -14,6 +15,16 @@ export const getInstruments = query(async () => {
   if (error) throw error
 
   return data
+})
+
+export const getInstrument = query.batch(z.uuid(), async ids => {
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
+
+  const { data, error } = await supabaseAdmin.from("instruments").select("*").in("id", ids)
+
+  if (error) throw error
+
+  return id => data.find(instrument => instrument.id === id)
 })
 
 export const createInstrument = form(createInstrumentSchema, async data => {
