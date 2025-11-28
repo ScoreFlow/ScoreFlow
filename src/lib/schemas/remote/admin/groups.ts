@@ -23,7 +23,8 @@ export const updateGroupSchema = z.object({
 
 export const updateGroupMemberInstrumentsSchema = z.object({
   group_id: z.uuid(),
-  user_id: z.uuid(),
+  user_id: z.uuid("Selecteer een gebruiker"),
+  new: z.boolean().optional(),
   instruments: z.array(z.uuid()).optional()
 })
 
