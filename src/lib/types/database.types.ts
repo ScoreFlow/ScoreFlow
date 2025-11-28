@@ -201,42 +201,6 @@ export type Database = {
         }
         Relationships: []
       }
-      group_instrument_users: {
-        Row: {
-          group_id: string
-          id: number
-          instrument_id: string
-          user_id: string
-        }
-        Insert: {
-          group_id: string
-          id?: number
-          instrument_id: string
-          user_id: string
-        }
-        Update: {
-          group_id?: string
-          id?: number
-          instrument_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "group_instrument_users_group_id_fkey"
-            columns: ["group_id"]
-            isOneToOne: false
-            referencedRelation: "groups"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "group_instrument_users_instrument_id_fkey"
-            columns: ["instrument_id"]
-            isOneToOne: false
-            referencedRelation: "instruments"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       group_pieces: {
         Row: {
           group_id: string
@@ -314,6 +278,42 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      user_group_instruments: {
+        Row: {
+          group_id: string
+          id: number
+          instrument_id: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: number
+          instrument_id: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: number
+          instrument_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_group_instruments_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_group_instruments_instrument_id_fkey"
+            columns: ["instrument_id"]
+            isOneToOne: false
+            referencedRelation: "instruments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

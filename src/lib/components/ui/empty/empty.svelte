@@ -11,10 +11,13 @@
 </script>
 
 <div
-	bind:this={ref}
-	data-slot="dialog-header"
-	class={cn("flex flex-col gap-2 text-center sm:text-start", className)}
 	{...restProps}
+	bind:this={ref}
+	class={cn(
+		"flex min-w-0 flex-1 flex-col items-center justify-center gap-6 text-balance rounded-lg border-dashed p-6 text-center md:p-12",
+		className
+	)}
+	data-slot="empty"
 >
 	{@render children?.()}
 </div>
