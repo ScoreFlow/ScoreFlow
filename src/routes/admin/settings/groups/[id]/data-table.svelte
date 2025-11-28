@@ -1,5 +1,6 @@
 <script lang="ts" module>
   import EllipsisIcon from "@lucide/svelte/icons/ellipsis"
+  import PlusIcon from "@lucide/svelte/icons/plus"
   import type { User } from "@supabase/supabase-js"
   import { type ColumnDef, getCoreRowModel, type RowData } from "@tanstack/table-core"
   import { page } from "$app/state"
@@ -16,6 +17,8 @@
   import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table"
   import { getInstrument } from "$lib/remote/admin/scores.remote"
   import { getUser } from "$lib/remote/admin/users.remote"
+  import CreateGroupMemberDialog from "./create-group-member-dialog.svelte"
+  import DeleteGroupMemberDialog from "./delete-group-member-dialog.svelte"
   import EditGroupMemberDialog from "./edit-group-member-dialog.svelte"
 
   declare module "@tanstack/table-core" {
@@ -26,7 +29,9 @@
 </script>
 
 <script lang="ts">
-  interface Row {
+  import { DropdownMenuSeparator } from '$lib/components/ui/dropdown-menu';
+
+	interface Row {
     user_id: string
     instrument_ids: string[]
   }
@@ -64,6 +69,15 @@
     user: null as User | null
   })
 
+	let createGroupMemberDialog = $state({
+		open: false,
+	})
+
+	let deleteGroupMemberDialog = $state({
+		open: false,
+		user: null as User | null
+	})
+
   let table = createSvelteTable({
     get data() {
       return data
@@ -77,7 +91,10 @@
 
 <div class="flex flex-col gap-2">
 	<div class="flex justify-end">
-		<!--<CreateInstrumentButton />-->
+		<Button variant="outline" size="sm" onclick={() => createGroupMemberDialog.open = true}>
+			<PlusIcon />
+			<span class="hidden lg:inline">Lid toevoegen</span>
+		</Button>
 	</div>
 	<div class="rounded-md border [&_th]:px-4 [&_td]:px-4 [&_th:last-child]:w-0 [&_td:last-child]:w-0">
 		<Table>
@@ -122,6 +139,9 @@
 </div>
 
 <EditGroupMemberDialog bind:open={editGroupMemberDialog.open} group_id={id} user={editGroupMemberDialog.user} />
+<CreateGroupMemberDialog bind:open={createGroupMemberDialog.open} group_id={id} />
+<DeleteGroupMemberDialog bind:open={deleteGroupMemberDialog.open} group_id={id} user={deleteGroupMemberDialog.user} />
+
 
 {#snippet UserName({ row }: {row: Row})}
 	{#await getUser(row.user_id)}
@@ -158,6 +178,10 @@
 		<DropdownMenuContent>
 			<DropdownMenuItem onclick={async () => editGroupMemberDialog = {open: true, user: await getUser(row.user_id)}}>
 				Bewerken
+			</DropdownMenuItem>
+			<DropdownMenuSeparator />
+			<DropdownMenuItem variant="destructive" onclick={async () => deleteGroupMemberDialog = {open: true, user: await getUser(row.user_id)}}>
+				Verwijderen
 			</DropdownMenuItem>
 		</DropdownMenuContent>
 	</DropdownMenu>
