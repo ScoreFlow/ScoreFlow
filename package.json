@@ -31,7 +31,7 @@
     "formsnap": "^2.0.1",
     "globals": "^16.5.0",
     "playwright": "^1.57.0",
-    "prettier": "^3.4.2",
+    "prettier": "^3.7.4",
     "prettier-plugin-svelte": "^3.3.3",
     "svelte": "^5.43.5",
     "svelte-check": "^4.3.4",
