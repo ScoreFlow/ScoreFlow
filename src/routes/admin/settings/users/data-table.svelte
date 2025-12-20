@@ -51,11 +51,13 @@
     user: null as UserData | null
   })
 
-  const table = createSvelteTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel()
-  })
+  const table = $derived(
+    createSvelteTable({
+      data,
+      columns,
+      getCoreRowModel: getCoreRowModel()
+    })
+  )
 </script>
 
 <div class="flex flex-col gap-2 max-w-2xl">

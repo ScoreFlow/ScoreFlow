@@ -7,7 +7,7 @@
 
   const { group }: { group: Tables<"groups"> } = $props()
 
-  let members = await getGroupMembers({ id: group.id })
+  let members = $derived(await getGroupMembers({ id: group.id }))
 </script>
 
 

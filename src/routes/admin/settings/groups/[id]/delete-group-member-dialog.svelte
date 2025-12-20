@@ -1,5 +1,6 @@
 <script lang="ts">
   import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
+  import type { User } from "@supabase/supabase-js"
   import { Issues } from "$lib/components/issues"
   import { Alert, AlertDescription } from "$lib/components/ui/alert"
   import { Button } from "$lib/components/ui/button"
@@ -15,9 +16,8 @@
   import { Spinner } from "$lib/components/ui/spinner"
   import { getGroup, updateGroupMemberInstruments } from "$lib/remote/admin/groups.remote"
   import { updateGroupMemberInstrumentsSchema } from "$lib/schemas/remote/admin/groups"
-  import type { UserData } from "$lib/types/users.types"
 
-  let { open = $bindable(false), user, group_id }: { open: boolean; user: UserData | null; group_id: string } = $props()
+  let { open = $bindable(false), user, group_id }: { open: boolean; user: User | null; group_id: string } = $props()
 
   let group = $derived(await getGroup({ id: group_id }))
 </script>
