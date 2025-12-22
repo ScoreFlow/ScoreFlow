@@ -317,17 +317,17 @@ export type Database = {
       }
       user_roles: {
         Row: {
-          id: string
+          id: number
           role: Database["public"]["Enums"]["Role"]
           user_id: string
         }
         Insert: {
-          id?: string
+          id?: number
           role: Database["public"]["Enums"]["Role"]
           user_id: string
         }
         Update: {
-          id?: string
+          id?: number
           role?: Database["public"]["Enums"]["Role"]
           user_id?: string
         }
