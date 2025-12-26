@@ -111,12 +111,15 @@ export const updateGroupMemberInstruments = form(
   async ({ group_id, user_id, instruments, new: isNew }, invalid) => {
     const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
-    const groupMemberInstruments = await getGroupMemberInstruments({ group_id, user_id })
-
     if (isNew && (instruments?.length ?? 0) === 0) {
       invalid("Kies minimaal één instrument.")
       return
     }
+
+    const groupMemberInstruments = await getGroupMemberInstruments({
+      group_id,
+      user_id
+    })
 
     if (isNew && groupMemberInstruments.length > 0) {
       invalid("De gebruiker is al lid van deze groep.")

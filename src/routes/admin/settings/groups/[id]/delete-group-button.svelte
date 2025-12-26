@@ -1,5 +1,4 @@
 <script lang="ts">
-  import CircleCheckIcon from "@lucide/svelte/icons/circle-check"
   import { goto } from "$app/navigation"
   import { Issues } from "$lib/components/issues"
   import { Button } from "$lib/components/ui/button"

@@ -107,7 +107,7 @@
 	<DialogContent class="flex flex-col gap-4">
 		<form {...updateGroupMemberInstruments.preflight(updateGroupMemberInstrumentsSchema)} class="contents">
 			<input {...updateGroupMemberInstruments.fields.group_id.as('hidden', group?.id ?? '')} />
-			<input {...updateGroupMemberInstruments.fields.user_id.as('hidden', userId || 'undefined')} bind:value={userId} />
+			<input {...updateGroupMemberInstruments.fields.user_id.as('hidden', userId || '')} bind:value={userId} />
 			<input class="hidden" {...updateGroupMemberInstruments.fields.new.as('checkbox')} checked={true} />
 			<DialogHeader>
 				<DialogTitle>
