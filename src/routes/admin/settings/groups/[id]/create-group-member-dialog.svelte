@@ -64,13 +64,13 @@
     }
   ]
 
-  const instrumentTable = createSvelteTable({
-    get data() {
-      return instruments
-    },
-    columns: instrumentTableColumns,
-    getCoreRowModel: getCoreRowModel()
-  })
+  const instrumentTable = $derived(
+    createSvelteTable({
+      data: instruments,
+      columns: instrumentTableColumns,
+      getCoreRowModel: getCoreRowModel()
+    })
+  )
 
   let userId: string = $state("")
   let userSelectionOpen = $state(false)
