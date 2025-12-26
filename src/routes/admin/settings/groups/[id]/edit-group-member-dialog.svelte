@@ -65,13 +65,13 @@
     }
   ]
 
-  const instrumentTable = createSvelteTable({
-    get data() {
-      return instruments
-    },
-    columns: instrumentTableColumns,
-    getCoreRowModel: getCoreRowModel()
-  })
+  const instrumentTable = $derived(
+    createSvelteTable({
+      data: instruments,
+      columns: instrumentTableColumns,
+      getCoreRowModel: getCoreRowModel()
+    })
+  )
 </script>
 
 <Dialog bind:open>
