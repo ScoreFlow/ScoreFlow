@@ -78,13 +78,11 @@
 		user: null as User | null
 	})
 
-  let table = createSvelteTable({
-    get data() {
-      return data
-    },
+	let table = $derived(createSvelteTable({
+		data,
     columns,
     getCoreRowModel: getCoreRowModel()
-  })
+	}))
 
   let id = $derived(page.params.id ?? "")
 </script>
