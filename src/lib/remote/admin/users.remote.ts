@@ -2,24 +2,17 @@ import { form, getRequestEvent, query } from "$app/server"
 import {
   deleteUserSchema,
   getUserRolesSchema,
+  getUserSchema,
   inviteUserSchema,
   updateUserRolesSchema
 } from "$lib/schemas/remote/admin/users"
-import { requireRole } from "$lib/server/utils/auth"
-import { getSupabaseServerAdmin } from "$lib/server/utils/supabase"
-import { Constants } from "$lib/types/database.types"
+import { safeGetSupabaseServerAdmin } from "$lib/server/utils/supabase"
 import type { UserData } from "$lib/types/users.types"
+import { updateHelper } from "$lib/utils/db"
 
 export const getUsers = query(async (): Promise<UserData[]> => {
-  const {
-    locals: { getSession }
-  } = getRequestEvent()
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
-  const session = await getSession()
-
-  await requireRole(session?.user, Constants.public.Enums.Role[0])
-
-  const supabaseAdmin = getSupabaseServerAdmin()
   const {
     data: { users: rawUsers },
     error
@@ -31,7 +24,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
 
   return await Promise.all(
     rawUsers.map(async user => {
-      const { roles } = await getUserRoles({ id: user.id })
+      const roles = await getUserRoles({ id: user.id })
       return {
         ...user,
         roles
@@ -40,17 +33,27 @@ export const getUsers = query(async (): Promise<UserData[]> => {
   )
 })
 
+export const getUser = query(getUserSchema, async ({ id }) => {
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
+
+  const {
+    data: { user },
+    error
+  } = await supabaseAdmin.auth.admin.getUserById(id)
+
+  if (error) {
+    throw error
+  }
+
+  return user
+})
+
 export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid) => {
   const {
-    locals: { getSession },
     url: { origin }
   } = getRequestEvent()
 
-  const session = await getSession()
-
-  await requireRole(session?.user, Constants.public.Enums.Role[0])
-
-  const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
   const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
     data: { full_name: name },
@@ -70,15 +73,7 @@ export const inviteUser = form(inviteUserSchema, async ({ name, email }, invalid
 })
 
 export const deleteUser = form(deleteUserSchema, async ({ id }, invalid) => {
-  const {
-    locals: { getSession }
-  } = getRequestEvent()
-
-  const session = await getSession()
-
-  await requireRole(session?.user, Constants.public.Enums.Role[0])
-
-  const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(id)
 
@@ -90,15 +85,7 @@ export const deleteUser = form(deleteUserSchema, async ({ id }, invalid) => {
 })
 
 export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
-  const {
-    locals: { getSession }
-  } = getRequestEvent()
-
-  const session = await getSession()
-
-  await requireRole(session?.user, Constants.public.Enums.Role[0])
-
-  const supabaseAdmin = getSupabaseServerAdmin()
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
   const { data: roles, error } = await supabaseAdmin.from("user_roles").select("role").eq("user_id", id)
 
@@ -106,37 +93,22 @@ export const getUserRoles = query(getUserRolesSchema, async ({ id }) => {
     throw error
   }
 
-  return { roles: roles.map(v => v.role) }
+  return roles.map(v => v.role)
 })
 
 export const updateUserRoles = form(updateUserRolesSchema, async ({ id, roles }, invalid) => {
-  const {
-    locals: { getSession }
-  } = getRequestEvent()
+  const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
-  const session = await getSession()
-
-  await requireRole(session?.user, Constants.public.Enums.Role[0])
-
-  const supabaseAdmin = getSupabaseServerAdmin()
-
-  const currentRolesSet = new Set((await getUserRoles({ id })).roles)
-  const newRolesSet = new Set(roles)
-
-  const rolesToDelete = currentRolesSet.difference(newRolesSet)
-  const rolesToAdd = newRolesSet.difference(currentRolesSet)
-
-  const updates = await Promise.all([
-    ...Array.from(rolesToAdd).map(role =>
-      supabaseAdmin.from("user_roles").insert({
+  const updates = await updateHelper(
+    await getUserRoles({ id }),
+    roles ?? [],
+    async role => await supabaseAdmin.from("user_roles").delete().eq("user_id", id).eq("role", role),
+    async role =>
+      await supabaseAdmin.from("user_roles").insert({
         user_id: id,
         role
       })
-    ),
-    ...Array.from(rolesToDelete).map(role =>
-      supabaseAdmin.from("user_roles").delete().eq("user_id", id).eq("role", role)
-    )
-  ])
+  )
 
   const errors = updates.filter(update => update.error).map(update => update.error)
 

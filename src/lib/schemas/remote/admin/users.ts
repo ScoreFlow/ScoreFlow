@@ -6,6 +6,10 @@ export const inviteUserSchema = z.object({
   email: z.email("Ongeldig e-mailadres")
 })
 
+export const getUserSchema = z.object({
+  id: z.uuid()
+})
+
 export const deleteUserSchema = z.object({
   id: z.uuid()
 })
