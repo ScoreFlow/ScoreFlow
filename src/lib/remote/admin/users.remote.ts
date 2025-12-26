@@ -1,8 +1,8 @@
-import * as z from "zod"
 import { form, getRequestEvent, query } from "$app/server"
 import {
   deleteUserSchema,
   getUserRolesSchema,
+  getUserSchema,
   inviteUserSchema,
   updateUserRolesSchema
 } from "$lib/schemas/remote/admin/users"
@@ -33,7 +33,7 @@ export const getUsers = query(async (): Promise<UserData[]> => {
   )
 })
 
-export const getUser = query(z.uuid(), async id => {
+export const getUser = query(getUserSchema, async ({ id }) => {
   const supabaseAdmin = await safeGetSupabaseServerAdmin()
 
   const {

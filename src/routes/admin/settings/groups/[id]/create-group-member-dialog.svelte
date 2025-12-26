@@ -74,7 +74,7 @@
 
   let userId: string = $state("")
   let userSelectionOpen = $state(false)
-  let user = $derived(userId ? await getUser(userId) : undefined)
+  let user = $derived(userId ? await getUser({ id: userId }) : undefined)
 </script>
 
 <CommandDialog bind:open={userSelectionOpen} bind:value={userId}>

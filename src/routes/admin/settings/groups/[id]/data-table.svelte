@@ -142,7 +142,7 @@
 
 
 {#snippet UserName({ row }: {row: Row})}
-	{#await getUser(row.user_id)}
+	{#await getUser({id: row.user_id})}
 		<Skeleton class="h-4 w-24" />
 	{:then user}
 		<span>{user?.user_metadata?.full_name ?? user?.email ?? ""}</span>
@@ -157,7 +157,7 @@
 	">
 		{#each row.instrument_ids as id (id)}
 			<Badge variant="outline">
-				{(await getInstrument(id))?.name}
+				{(await getInstrument({ id }))?.name}
 			</Badge>
 		{/each}
 	</div>
@@ -174,11 +174,11 @@
 			{/snippet}
 		</DropdownMenuTrigger>
 		<DropdownMenuContent>
-			<DropdownMenuItem onclick={async () => editGroupMemberDialog = {open: true, user: await getUser(row.user_id)}}>
+			<DropdownMenuItem onclick={async () => editGroupMemberDialog = {open: true, user: await getUser({id: row.user_id})}}>
 				Bewerken
 			</DropdownMenuItem>
 			<DropdownMenuSeparator />
-			<DropdownMenuItem variant="destructive" onclick={async () => deleteGroupMemberDialog = {open: true, user: await getUser(row.user_id)}}>
+			<DropdownMenuItem variant="destructive" onclick={async () => deleteGroupMemberDialog = {open: true, user: await getUser({id: row.user_id})}}>
 				Verwijderen
 			</DropdownMenuItem>
 		</DropdownMenuContent>
