@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements"
-  import * as Tooltip from "$lib/components/ui/tooltip/index.js"
+  import * as Tooltip from "$lib/components/ui/tooltip"
   import { cn, type WithElementRef } from "$lib/utils/ui"
   import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from "./constants.js"
-  import { setSidebar } from "./context.svelte.js"
+  import { setSidebar } from "./context.svelte"
 
   let {
     ref = $bindable(null),
