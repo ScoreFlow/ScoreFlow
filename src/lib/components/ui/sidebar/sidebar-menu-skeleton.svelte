@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements"
-  import { Skeleton } from "$lib/components/ui/skeleton/index.js"
+  import { Skeleton } from "$lib/components/ui/skeleton"
   import { cn, type WithElementRef } from "$lib/utils/ui"
 
   let {
@@ -28,7 +28,7 @@
 		<Skeleton class="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />
 	{/if}
 	<Skeleton
-		class="max-w-(--skeleton-width) h-4 flex-1"
+		class="h-4 max-w-(--skeleton-width) flex-1"
 		data-sidebar="menu-skeleton-text"
 		style="--skeleton-width: {width};"
 	/>
