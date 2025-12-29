@@ -16,7 +16,7 @@
   "devDependencies": {
     "@eslint/compat": "^2.0.0",
     "@eslint/js": "^9.39.1",
-    "@internationalized/date": "^3.10.0",
+    "@internationalized/date": "^3.10.1",
     "@lucide/svelte": "^0.561.0",
     "@sveltejs/adapter-vercel": "^6.1.1",
     "@sveltejs/kit": "^2.46.5",
